@@ -34,8 +34,8 @@ var _list = {
 					$("#listData").append("<tr onclick=\"_list.goEdit('"+f.asstSn+"')\">"
 						+"<td>" +f.asstSn+"</td><td>"+f.asstAccntNov+"</td><td>"
 						+f.asstNm+"</td><td>"+f.asstAccntSclasNm+"</td><td>"
-						+f.locplcNm+"</td><td>"+f.frstAcqsYmd+"</td><td>"
-						+f.frstAcqsPc+"</td><td>"+f.revalYmd+"</td><td>"+f.revalAm+"</td><td>"+f.nowUslfsvcCo+"</td>"
+						+f.locplcNm+"</td><td>"+f.frstAcqsYmd+"</td><td class='ralign'>"
+						+f.frstAcqsPc+"</td><td>"+f.revalYmd+"</td><td class='ralign'>"+f.revalAm+"</td><td>"+f.nowUslfsvcCo+"</td>"
 						+"</tr>"
 					);
 				});
@@ -44,6 +44,7 @@ var _list = {
 				}
 				_list.pagination.setTotalItems(data.totalElements); // 총레코드 수
 				_list.pagination._paginate(page); // 조회 page
+				$("#tCnt").text(_commUtils.numberWithCommas(data.totalElements));
 			}
 		});
 	} // getList()
@@ -52,7 +53,11 @@ var _list = {
 		mode = "POST";
 	}
 	,goEdit(asstSn) {
-		window.location = "/asst/edit?asstSn="+asstSn;
+		var params = $("#searchForm").serialize();
+		params = encodeURIComponent(params);
+		console.log(params);
+		
+		window.location = "/asst/edit?asstSn="+asstSn + "&params=" + params;
 	}
 	,getDetail : function(asstSn) {
 		mode="PUT"; // 수정모드

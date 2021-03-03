@@ -45,7 +45,8 @@ var _ajaxUtils = {
 			, error: function( jqXHR, textStatus ) {
 				if (jqXHR.status == 401) {
 					window.location.href = "/login/page"; 
-				} else if (jqXHR.status == 500 && jqXHR.responseText.indexOf("ConstraintViolationException")) {
+				} else if (jqXHR.status == 500 && jqXHR.responseText.indexOf("ConstraintViolationException")>-1) {
+					console.log(jqXHR.responseText);
 					alert("중복된 값(영문약어,단어명or용어명..)이 있습니다. 검색 후 등록하세요.");
 				} else {
 					alert("시스템 오류입니다. 잠시 후 다시 접속하시기 바랍니다. [ message: " + jqXHR.responseText + "\error:" + textStatus+ "]");

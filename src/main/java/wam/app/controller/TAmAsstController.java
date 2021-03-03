@@ -21,13 +21,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class TAmAsstController {
 
 	@GetMapping("/asst/list")
-	public String asst_list() throws Exception {
+	public String asst_list(@RequestParam Map<String,Object> params, ModelMap model) throws Exception {
+		params.forEach((k,v)->model.addAttribute(k, v));
 		return "asst_list";
 	}
 
 	@GetMapping("/asst/edit")
-	public String asst_edit(@RequestParam Integer asstSn,ModelMap model) throws Exception {
+	public String asst_edit(@RequestParam Integer asstSn,@RequestParam String params, ModelMap model) throws Exception {
 		model.addAttribute("asstSn", asstSn);
+		model.addAttribute("params", params);
 		return "asst_edit";
 	}
 	

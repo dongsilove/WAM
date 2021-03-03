@@ -39,6 +39,9 @@ function processNull(obj) {
 				//console.log("processNull : key-" + key);
 				//console.log("processNull : value-" + obj[key]);
 			}
+			if (key.indexOf('Am')>-1 || key.indexOf('Pc')>-1) { // 금액,가격인경우 ,넣기
+				 obj[key]= _commUtils.numberWithCommas( obj[key] );
+			}
 		}
 	}
 }
@@ -57,7 +60,9 @@ function processYmd(obj) {
 			//console.log("processYmd : key - " + key);
 			obj[key] = obj[key].trim(); // 공백제거
 			if (key.indexOf('Ymd')>-1 && !isEmpty(obj[key])) obj[key] = obj[key].replaceAll('-',''); // 날짜구분자 '-' 제거
-			//console.log("processYmd : value - " + obj[key]);
+			//if (key.indexOf('Am')>-1 || key.indexOf('Pc')>-1) {
+			//	obj[key] = _commUtils.removeCommas(obj[key]);
+			//}
 		}
 	}
 }

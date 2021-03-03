@@ -33,17 +33,34 @@
 				</div>
                 <div class="user_form task_list_wrap">
                 <form name="detailForm" id="detailForm" onsubmit="return false;">
-					<input type="hidden" name="nmode" value="">
+					<input type="hidden" name="params" id="params" value="${params}">
 					<input type="hidden" name="pk" value="">
 					<input type="hidden" name="page" value="">
                     <div class="ul_table">
                         <ul>
                             <li><label for="asstSn">자산일련번호</label></li>
-                            <li><input type="text" name="asstSn" id="asstSn" value="" readonly ></li>
+                            <li><input type="text" name="asstSn" id="asstSn" value="" readonly >
+                            	<label><input type="checkbox" name="asstCnfirmYn" value="Y">자산확인</label></li>
                         </ul>
                         <ul>
                             <li class="required"><label for="asstNm">자산명</label></li>
                             <li><input type="text" name="asstNm" id="asstNm" style="width:100%;"></li>
+                        </ul>
+                        <ul>
+                            <li class="required"><label for="splsysNm">계통</label></li>
+                            <li><select name="splsysNm" class="splsysNm"></select></li>
+                        </ul>
+                        <ul>
+                            <li class="required"><label for="prcNm">공정</label></li>
+                            <li><select name="prcNm" class="prcNm"></select></li>
+                        </ul>
+                        <ul>
+                            <li class="required"><label for="worktypeNm">공종</label></li>
+                            <li><select name="worktypeNm" class="worktypeNm"></select></li>
+                        </ul>
+                        <ul>
+                            <li class="required"><label for="rm">비고</label></li>
+                            <li><input type="text" name="rm" style="width:100%;"></li>
                         </ul>
                         <ul>
                             <li class="required"><label for="asstAccntNov">자산회계번호</label></li>
@@ -167,7 +184,13 @@
 $(function() {
 	
 	_list.getDetail('${asstSn}');
-	_commUtils.getCodes($(".asstCl"),"WD004"); // 도메인 분류 코드 조회(EX. 일시,번호,식별...)
+	//공급계통 function(urls, objs ,textNm,valueNm)
+	_commUtils.getSelectBox('/api/common/codes/SPSYS',$(".splsysNm"),"cdNm","cdNm"); 
+	//공정
+	_commUtils.getSelectBox('/api/common/codes/PRC',$(".prcNm"),"cdNm","cdNm"); 
+	//공종
+	_commUtils.getSelectBox('/api/common/codes/WTYPE',$(".worktypeNm"),"cdNm","cdNm"); 
+
 
 	$("#detailForm").validate({
 		
@@ -175,8 +198,11 @@ $(function() {
 			console.log("validation 성공 이후 ");
  			_ajaxUtils.ajax({"url" : "/api/assts/", "method": "PUT", "form" : $("#detailForm")
 				,"successCallback": function(result) {
-					_list.getList();
 					detailForm.reset();
+					alert("저장되었습니다.");
+					let params = decodeURIComponent($("#params").val());
+					console.log(params);
+					window.location = "/asst/list?" + params;
 				}
 			});
 		}

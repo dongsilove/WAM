@@ -377,6 +377,7 @@ input[readonly] + .calendar, input[disabled] + .calendar { display: block; posit
     color:#fff
 }
 
+/* 용어,단어 등록 아래 미리찾기 */
 #nmList {width:100%;margin-top:10px;background-color: #fff;border-top: 2px solid #000;}
 #nmList ul {list-style:none;padding:4px 0px;border-bottom:1px solid #eeeeee;}
 #nmList ul:hover {background-color: #f8f8f8;cursor:pointer}
@@ -386,11 +387,17 @@ input[readonly] + .calendar, input[disabled] + .calendar { display: block; posit
 #nmList ul li:nth-child(2){width:15%;}
 #nmList ul li:nth-child(3){width:auto;}
 
+/* 자산 등록 */
 .ul_table {overflow:auto;background-color: #fff;}
 .ul_table ul {display:inline-block; padding:3px 10px;border-bottom: 3px solid #eee; }
 .ul_table ul li:nth-child(1){width:140px;padding-left:5px; font-weight:bold;}
 /* .ul_table ul li:nth-child(2){width:auto;} */
 .ul_table ul li {display:inline-block; padding:2px 0px;}
+
+.lalign {text-align:left;}
+.calign {text-align:center;}
+.ralign {text-align:right;}
+.tot_cnt {padding-bottom:5px;font-size:14px;}
 
 /*member_order*/
 .task_order_wrap{max-width:500px;padding:15px 10px;}

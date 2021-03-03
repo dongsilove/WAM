@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
 //========================================
 // @brief 데이터사전 > 자산 > 목록
@@ -26,14 +27,25 @@
             
             <div class="write"><!-- 검색 -->
                 <div class="write_inner">
+                	<div style=""></div>
 					<div class="write_search">
 					<form name="searchForm" id="searchForm" method="GET">
 						<input type="hidden" id="page" name="page">
 						<input type="hidden" id="searchtmp" name="" value=""  />
 						
-						<span> 자산분류 : 
-							<select name="asstCl" id="asstCl" onChange="_list.getList(1);" class="asstCl">
-								   <option value=''> -- 주제구분 선택 -- </option>
+						<span> 계통 : 
+							<select name="splsysNm" id="splsysNm" onChange="_list.getList(1);" class="splsysNm">
+								   <option value=''> </option>
+							</select>
+						</span>
+						<span> 공정 : 
+							<select name="prcNm" id="prcNm" onChange="_list.getList(1);" class="prcNm">
+								   <option value=''> </option>
+							</select>
+						</span>
+						<span> 공종 : 
+							<select name="worktypeNm" id="worktypeNm" onChange="_list.getList(1);" class="worktypeNm">
+								   <option value=''> </option>
 							</select>
 						</span>
 						
@@ -62,6 +74,7 @@
 				
 			</div>
             <div class="container_inner task_list_wrap">
+            	<div class="tot_cnt" style="">총 <span id="tCnt"></span>건</div>
                 <div class="task_list">
                 <table id="list_t">
                     <colgroup>
@@ -106,8 +119,18 @@
 $(function() {
 	
 	_list.paginationInit();
+	$("#splsysNm").val('${splsysNm}');
+	$("#prcNm").val('${prcNm}');
+	$("#worktypeNm").val('${worktypeNm}');
+	$("#searchName").val('${searchName}');
+	$("#searchValue").val('${searchValue}');
 	_list.getList(1);
-	_commUtils.getCodes($(".asstCl"),"WD004"); // 도메인 분류 코드 조회(EX. 일시,번호,식별...)
+	//공급계통 function(urls, objs ,textNm,valueNm)
+	_commUtils.getSelectBox('/api/common/codes/SPSYS',$(".splsysNm"),"cdNm","cdNm"); 
+	//공정
+	_commUtils.getSelectBox('/api/common/codes/PRC',$(".prcNm"),"cdNm","cdNm"); 
+	//공종
+	_commUtils.getSelectBox('/api/common/codes/WTYPE',$(".worktypeNm"),"cdNm","cdNm"); 
 
 });
 </script>

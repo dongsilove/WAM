@@ -69,7 +69,7 @@ public class TAmAsstApiController {
 		} else if(param.get("splsysLocplcNm") != null && !param.get("splsysLocplcNm").toString().equals("")) {
 			list = (Page<TAmAsst>) asstRepository.findBySplsysLocplcNmContaining(param.get("splsysLocplcNm").toString(), pageRequest);
 		} else {
-			list = (Page<TAmAsst>) asstRepository.findAll(PageRequest.of(page - 1, perPage));
+			list = (Page<TAmAsst>) asstRepository.findAll(pageRequest);
 		}
 		return list;
 		
