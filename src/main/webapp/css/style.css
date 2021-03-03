@@ -335,7 +335,7 @@ input[readonly] + .calendar, input[disabled] + .calendar { display: block; posit
 
 /* list task_list */
 .task_list{text-align: center;}
-.task_list table{width:100%;max-width:1600px;margin: 0 auto;overflow: hidden;font-size:14px;cursor:pointer;
+.task_list table{width:100%;margin: 0 auto;overflow: hidden;font-size:14px;cursor:pointer;
 		box-shadow:3px 3px 5px rgba(0,0,0,.1);border-radius:3px;}
 .task_list th{padding:12px 0;border-top:2px solid #595959;border-bottom:1px solid #c4c4c4;font-weight: bold;
 		background-color: #f8f8f8;color:#484848;}
@@ -344,7 +344,7 @@ input[readonly] + .calendar, input[disabled] + .calendar { display: block; posit
 
 /* user_form */
 .user_wrap{max-width:900px;padding:20px 10px;}
-.user_form,.theme_form{border-top:2px solid #000;overflow:hidden;font-size:14px;margin:15px 5px;padding-bottom:5px;}
+.user_form,.theme_form{border-top:2px solid #000;overflow:hidden;font-size:14px;margin:15px auto;padding-bottom:5px;}
 .user_form span{display:block;margin-top:5px;font-size:12px;font-weight:bold;color:#ff5656;line-height:1.4}/* margin-left:5px; */
 .leave{font-weight:bold;color:#ff5656;margin:10px 0 0 0;}
 .user_form table{box-shadow:3px 3px 5px rgba(0,0,0,.1);border-radius:3px;}
@@ -385,6 +385,13 @@ input[readonly] + .calendar, input[disabled] + .calendar { display: block; posit
 #nmList ul li:nth-child(1){width:80px;}
 #nmList ul li:nth-child(2){width:15%;}
 #nmList ul li:nth-child(3){width:auto;}
+
+.ul_table {overflow:auto;background-color: #fff;}
+.ul_table ul {display:inline-block; padding:3px 10px;border-bottom: 3px solid #eee; }
+.ul_table ul li:nth-child(1){width:140px;padding-left:5px; font-weight:bold;}
+/* .ul_table ul li:nth-child(2){width:auto;} */
+.ul_table ul li {display:inline-block; padding:2px 0px;}
+
 /*member_order*/
 .task_order_wrap{max-width:500px;padding:15px 10px;}
 .task_order_wrap .task_order_title{font-weight:bold;font-size:14px;background-color:#117bf4;color:#fff;padding:10px 5px;}
@@ -668,8 +675,12 @@ input#back_img{width:100%}
     .setting_search i:hover{background-color:#ddd;transition:all .2s}
     .container .title_th{padding:30px 20px}
 	.theme_calcul_wrap{padding:20px;max-width:1100px;}
+	
+	.ul_table ul li:nth-child(1){width:220px;}
+	.ul_table ul li:nth-child(2){width:540px;}
+	
 }
-@media screen and (min-width: 1024px){
+@media screen and (min-width: 1024px){ /* 1024px보다 크면 */
     .btn_mobile_menu{display: none;}
     .bg{display: none !important}
     .edit_wrap  .edit_form{float:left;width:45%;padding:0 50px 0 20px ;border-right:1px dashed #a3a3a3}
@@ -685,5 +696,6 @@ input#back_img{width:100%}
    /*.theme_setting_wrap{min-width:1500px;}*/
     .icon_edit_list ul li {width: 10%;}
     .themelg_edit_list ul li {width: 25%;}
+    .task_list_wrap{max-width:1800px;}
 }
 

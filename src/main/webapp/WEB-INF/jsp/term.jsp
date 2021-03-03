@@ -44,7 +44,7 @@
 										<option value="termNm" >용어명</option>
 										<option value="termEnAbbr" >용어영문약어</option>
 										<option value="termEnNm" >용어영문명</option>
-										<option value="dataFom" >데이터형태</option>
+										<option value="dataFom" >데이터형식</option>
 								</select>
 								<input type="text" name="searchValue" id="searchValue" value="" 
 									placeholder="검색할 내용을 입력해주세요"  
@@ -78,7 +78,7 @@
 		                            <th scope="col">용어영문약어</th>
 		                            <th scope="col">용어영문명</th>
 		                            <th scope="col">도메인명</th>
-		                            <th scope="col">데이터형태</th>
+		                            <th scope="col">데이터형식</th>
 		                            <th scope="col">프로젝트</th>
 		                            <th scope="col">등록일시</th>
 		                            <th scope="col">수정일시</th>
@@ -145,7 +145,7 @@
 	                            </td>
 	                        </tr>
 	                        <tr>
-	                            <th class="required"><label for="dataFom">데이터 형태</label></th>
+	                            <th class="required"><label for="dataFom">데이터 형식</label></th>
 	                            <td><input type="text" name="dataFom" id="dataFom"  value="" style="width:100%"></td>
 	                        </tr>
 	                        <tr>

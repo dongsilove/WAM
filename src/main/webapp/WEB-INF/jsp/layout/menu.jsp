@@ -5,12 +5,12 @@
                 <div class="about"><span>BA2</span> 박이정</div><!-- 화면width 줄어들면 보인다 -->
             </div>
             <ul>
-                <li><a href="#">데이터사전</a>
+                <li><a href="#">인벤토리</a>
                     <ul class="depth">
-                        <li><a href="/govword/page"><i class="fas fa-book"></i>행정단어</a></li><!-- class="on" -->
-                        <li><a href="/domain/page"><i class="far fa-square"></i>도메인</a></li><!-- far fa-window-maximize -->
-                        <li><a href="/word/page"><i class="fas fa-cube"></i>단어</a></li><!-- fas fa-address-book, far fa-file-word-->
-                        <li><a href="/term/page"><i class="fas fa-cubes"></i>용어</a></li>
+                        <li class="on"><a href="/asst/list"><i class="fas fa-book"></i>수원자산</a></li>
+                        <!-- <li><a href="/domain/page"><i class="far fa-square"></i>도메인</a></li>
+                        <li><a href="/word/page"><i class="fas fa-cube"></i>단어</a></li>
+                        <li><a href="/term/page"><i class="fas fa-cubes"></i>용어</a></li> -->
                     </ul>
                 </li>
                 <li><a href="#">기본정보</a>

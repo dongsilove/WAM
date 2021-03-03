@@ -8,15 +8,15 @@
 		<version>2.4.2</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>dicmeta.app</groupId>
-	<artifactId>metasystem</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<groupId>wam.app</groupId>
+	<artifactId>wam</artifactId>
+	<version>0.0.1</version>
 	<packaging>war</packaging>
-	<name>metasystem</name>
-	<description>metasystem</description>
+	<name>WAM</name>
+	<description>Water supply Assets Management</description>
 	<properties>
 		<java.version>1.8</java.version>
-		<start-class>dicmeta.app.DicmetaApplication</start-class>
+		<start-class>wam.app.WamApplication</start-class>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -98,10 +98,19 @@
             <version>4.1.0</version>
         </dependency>
 		
+		<!-- JSTL -->
+		<dependency>
+		    <groupId>javax.servlet</groupId>
+		    <artifactId>jstl</artifactId>
+		    <version>1.2</version>
+		</dependency>
+		
+
+
 	</dependencies>
 
 	<build>
-		<finalName>metasystem</finalName>
+		<finalName>ROOT</finalName>
 		<defaultGoal>install</defaultGoal>
 		<plugins>
 			<!-- querydsl start -->
