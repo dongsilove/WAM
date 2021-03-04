@@ -1,21 +1,45 @@
-/*******************
- * cmFile 첨부파일
- * 2020.05.22 박이정(마인드원)
- *******************/
+/**
+ * @FileName 	cmFile.js
+ * @author 		ljpark
+ * @Date 		2021.03.04
+ * @Description 파일 관리
+ */
 
 var cmFile = {
-		
-	getCmFile : function(_tblNm,_tblSn){ 
+	list : function(_tblNm,_tblSn){ 
 		var dfd = $.Deferred();
 		var param = {tblNm : _tblNm, tblSn:_tblSn};
 		$.ajax({
-	    	url: "/sply/cmfile/getCmFile",
+	    	url: "/cmfile/list", 
 	    	type : "POST",
 	    	data: JSON.stringify(param),
 	    	dataType : "json",
 	    	contentType : "application/json;charset=UTF-8",
 	    	success: function (result) {
-	    		console.log(result);
+	    		//console.log(result);
+	    		if(!result.list) { 
+	    			return dfd.reject();
+	    		} else {
+	    			return dfd.resolve(result.list);
+	    		}
+	        }
+			,error : function(request, error) {
+				return dfd.reject(new Error("message: " + request.responseText + ", error:" + error));
+			}
+		});
+		return dfd.promise();
+	},
+	getCmFile : function(_tblNm,_tblSn){ 
+		var dfd = $.Deferred();
+		var param = {tblNm : _tblNm, tblSn:_tblSn};
+		$.ajax({
+	    	url: "/cmfile/getCmFile", 
+	    	type : "POST",
+	    	data: JSON.stringify(param),
+	    	dataType : "json",
+	    	contentType : "application/json;charset=UTF-8",
+	    	success: function (result) {
+	    		//console.log(result);
 	    		if(!result.data) { 
 	    			return dfd.reject();
 	    		} else {
@@ -23,15 +47,14 @@ var cmFile = {
 	    		}
 	        }
 			,error : function(request, error) {
-				return dfd.reject();
-				alert("message: " + request.responseText + ", error:" + error);
+				return dfd.reject(new Error("message: " + request.responseText + ", error:" + error));
 			}
 		});
 		return dfd.promise();
 	},
 	fileDownload : function (savePath,saveFileNm,realFileNm) {
 		if(savePath!=null&&saveFileNm!=null&&realFileNm!=null){
-			location.href = "/sply/cmfile/fileDownload?savePath="+savePath+"&saveFileNm="+saveFileNm+"&realFileNm="+realFileNm;
+			location.href = "/cmfile/fileDownload?savePath="+savePath+"&saveFileNm="+saveFileNm+"&realFileNm="+realFileNm;
 		}
 	},
 	//개별 다운로드 
@@ -44,6 +67,52 @@ var cmFile = {
 				alert('파일 다운로드 실패!\n관리자에게 문의 주세요.');
 			}
 		});
+	},
+	delete : function(_tblNm,_tblSn){ 
+		var dfd = $.Deferred();
+		var param = {tblNm : _tblNm, tblSn:_tblSn};
+		$.ajax({
+	    	url: "/cmfile/delete", 
+	    	type : "DELETE",
+	    	data: JSON.stringify(param),
+	    	dataType : "json",
+	    	contentType : "application/json;charset=UTF-8",
+	    	success: function (result) {
+	    		//console.log(result);
+	    		if(result.msg=='실패하였습니다.') { 
+	    			return dfd.reject();
+	    		} else {
+	    			return dfd.resolve(result.msg);
+	    		}
+	        }
+			,error : function(request, error) {
+				return dfd.reject(new Error("message: " + request.responseText + ", error:" + error));
+			}
+		});
+		return dfd.promise();
+	},
+	deleteOne : function(_fileSn){ 
+		var dfd = $.Deferred();
+		var param = {fileSn : _fileSn};
+		$.ajax({
+	    	url: "/cmfile/deleteOne", 
+	    	type : "DELETE",
+	    	data: JSON.stringify(param),
+	    	dataType : "json",
+	    	contentType : "application/json;charset=UTF-8",
+	    	success: function (result) {
+	    		//console.log(result);
+	    		if(result.msg=='실패하였습니다.') { 
+	    			return dfd.reject();
+	    		} else {
+	    			return dfd.resolve(result.msg);
+	    		}
+	        }
+			,error : function(request, error) {
+				return dfd.reject(new Error("message: " + request.responseText + ", error:" + error));
+			}
+		});
+		return dfd.promise();
 	}
 	
 }
