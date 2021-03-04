@@ -35,6 +35,8 @@ public class TAmAsstApiController {
 	
 	@Autowired
 	TAmAsstRepository asstRepository;
+	@Autowired
+	TAmAsstQuerydslRepository asstQuerydslRepository;
 
 	@Operation(summary = "자산 목록 조회", description = "검색 값으로 페이징된 자산 목록 화면을 호출한다.")
 	@GetMapping("/assts")
@@ -44,33 +46,7 @@ public class TAmAsstApiController {
 		Page<TAmAsst> list;
 		param.forEach((k,v)->logger.debug("key:" + k + "\tvalue:" +v));
 		PageRequest pageRequest = PageRequest.of(page - 1, perPage, Sort.by(Direction.DESC, "asstSn"));
-		if(param.get("asstNm") != null && !param.get("asstNm").toString().equals("")) {
-			list = (Page<TAmAsst>) asstRepository.findByAsstNmContaining(param.get("asstNm").toString(), pageRequest);
-		} else if(param.get("asstAccntNov") != null && !param.get("asstAccntNov").toString().equals("")) {
-			list = (Page<TAmAsst>) asstRepository.findByAsstAccntNovContaining(param.get("asstAccntNov").toString(), pageRequest);
-		} else if(param.get("asstAccntSclasNm") != null && !param.get("asstAccntSclasNm").toString().equals("")) {
-			list = (Page<TAmAsst>) asstRepository.findByAsstAccntSclasNmContaining(param.get("asstAccntSclasNm").toString(), pageRequest);
-		} else if(param.get("locplcNm") != null && !param.get("locplcNm").toString().equals("")) {
-			list = (Page<TAmAsst>) asstRepository.findByLocplcNmContaining(param.get("locplcNm").toString(), pageRequest);
-		} else if(param.get("psitnNm") != null && !param.get("psitnNm").toString().equals("")) {
-			list = (Page<TAmAsst>) asstRepository.findByPsitnNmContaining(param.get("psitnNm").toString(), pageRequest);
-		} else if(param.get("frstAcqsYmd") != null && !param.get("frstAcqsYmd").toString().equals("")) {
-			list = (Page<TAmAsst>) asstRepository.findByFrstAcqsYmdContaining(param.get("frstAcqsYmd").toString(), pageRequest);
-		} else if(param.get("revalYmd") != null && !param.get("revalYmd").toString().equals("")) { // 재평가일
-			list = (Page<TAmAsst>) asstRepository.findByRevalYmdContaining(param.get("revalYmd").toString(), pageRequest);
-		} else if(param.get("nowUslfsvcCo") != null && !param.get("nowUslfsvcCo").toString().equals("")) {
-			list = (Page<TAmAsst>) asstRepository.findByNowUslfsvcCo(param.get("nowUslfsvcCo").toString(), pageRequest);
-		} else if(param.get("prcNm") != null && !param.get("prcNm").toString().equals("")) {
-			list = (Page<TAmAsst>) asstRepository.findByPrcNmContaining(param.get("prcNm").toString(), pageRequest);
-		} else if(param.get("worktypeNm") != null && !param.get("worktypeNm").toString().equals("")) {
-			list = (Page<TAmAsst>) asstRepository.findByWorktypeNmContaining(param.get("worktypeNm").toString(), pageRequest);
-		} else if(param.get("splsysNm") != null && !param.get("splsysNm").toString().equals("")) {
-			list = (Page<TAmAsst>) asstRepository.findBySplsysNmContaining(param.get("splsysNm").toString(), pageRequest);
-		} else if(param.get("splsysLocplcNm") != null && !param.get("splsysLocplcNm").toString().equals("")) {
-			list = (Page<TAmAsst>) asstRepository.findBySplsysLocplcNmContaining(param.get("splsysLocplcNm").toString(), pageRequest);
-		} else {
-			list = (Page<TAmAsst>) asstRepository.findAll(pageRequest);
-		}
+		list = asstQuerydslRepository.findList(param, pageRequest);
 		return list;
 		
 	}
@@ -117,15 +93,7 @@ public class TAmAsstApiController {
 		Page<TAmAsst> list;
 		param.forEach((k,v)->logger.debug("key:" + k + "\tvalue:" +v));
 		PageRequest pageRequest = PageRequest.of(page - 1, perPage, Sort.by(Direction.DESC, "asstSn"));
-		if(param.get("asstNm") != null && !param.get("asstNm").toString().equals("")) {
-			list = (Page<TAmAsst>) asstRepository.findByAsstNmContaining(param.get("asstNm").toString(), pageRequest);
-		} else if(param.get("asstAccntNov") != null && !param.get("asstAccntNov").toString().equals("")) {
-			list = (Page<TAmAsst>) asstRepository.findByAsstAccntNovContaining(param.get("asstAccntNov").toString(), pageRequest);
-		} else if(param.get("asstAccntSclasNm") != null && !param.get("asstAccntSclasNm").toString().equals("")) {
-			list = (Page<TAmAsst>) asstRepository.findByAsstAccntSclasNmContaining(param.get("asstAccntSclasNm").toString(), pageRequest);
-		} else {
-			list = (Page<TAmAsst>) asstRepository.findAll(PageRequest.of(page - 1, perPage));
-		}
+		list = asstQuerydslRepository.findList(param, pageRequest);
 		return list;
 		
 	}

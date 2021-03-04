@@ -37,7 +37,7 @@ public class TAmAsst extends CommonTbl implements Serializable {
 	private Integer asstSn;
 
 	@Column(name="asst_accnt_nov")
-	@Schema(description ="자산회계번호" )
+	@Schema(description ="회계자산번호" )
 	private String asstAccntNov;
 
 	@Column(name="asst_accnt_sclas_nm")
@@ -162,6 +162,10 @@ public class TAmAsst extends CommonTbl implements Serializable {
 	@Column(name="splsys_locplc_nm")
 	@Schema(description ="계통소재지명" )
 	private String splsysLocplcNm;
+	
+	@Column(name="asst_accnt_lclas_nm")
+	@Schema(description ="자산회계대분류명" )
+	private String asstAccntLclasNm;
 	
 	public TAmAsst() {
 	}

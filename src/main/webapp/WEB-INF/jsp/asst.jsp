@@ -41,7 +41,7 @@
 								<select name="searchName" id="searchName" >
 										<!-- <option value=''> -- 검색선택 -- </option> -->
 										<option value="asstNm" >자산명</option>
-										<option value="asstAccntNov" >자산회계번호</option>
+										<option value="asstAccntNov" >회계자산번호</option>
 										<option value="asstAccntSclasNm" >자산회계소분류명</option>
 										<option value="locplcNm" >소재지명</option>
 										<option value="psitnNm" >소속명</option>
@@ -75,7 +75,7 @@
 		                    <thead>
 		                        <tr>
 		                            <th scope="col">번호</th>
-		                            <th scope="col">자산회계번호</th>
+		                            <th scope="col">회계자산번호</th>
 		                            <th scope="col">자산명</th>
 		                            <th scope="col">자산회계소분류명</th>
 		                            <th scope="col">소재지명</th>
@@ -122,7 +122,7 @@
 	                            <td><input type="text" name="asstNm" id="asstNm"  value="" ></td>
 	                        </tr>
 	                        <tr>
-	                            <th class="required"><label for="asstAccntNov">자산회계번호</label></th>
+	                            <th class="required"><label for="asstAccntNov">회계자산번호</label></th>
 	                            <td><input type="text" name="asstAccntNov" id="asstAccntNov"  value="" ></td>
 	                        </tr>
 	                        <tr>

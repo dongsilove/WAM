@@ -11,6 +11,15 @@
 <!DOCTYPE html>
 <html lang="ko">
 <jsp:include page="/WEB-INF/jsp/layout/header.jsp"/>
+<script>
+var mode = 'list';
+var splsysNm = '${splsysNm}';
+var prcNm = '${prcNm}';
+var worktypeNm = '${worktypeNm}';
+var asstAccntLclasNm = '${asstAccntLclasNm}';
+var searchName = '${searchName}';
+var searchValue = '${searchValue}';
+</script>
 <script src="/js/asst.js"></script>
 
 <body>
@@ -48,11 +57,16 @@
 								   <option value=''> </option>
 							</select>
 						</span>
+						<span> 회계대분류 : 
+							<select name="asstAccntLclasNm" id="asstAccntLclasNm" onChange="_list.getList(1);" class="asstAccntLclasNm">
+								   <option value=''> </option>
+							</select>
+						</span>
 						
 						<select name="searchName" id="searchName" >
-								<!-- <option value=''> -- 검색선택 -- </option> -->
+								<option value=''>검색선택</option>
 								<option value="asstNm" >자산명</option>
-								<option value="asstAccntNov" >자산회계번호</option>
+								<option value="asstAccntNov" >회계자산번호</option>
 								<option value="asstAccntSclasNm" >자산회계소분류명</option>
 								<option value="locplcNm" >소재지명</option>
 								<option value="psitnNm" >소속명</option>
@@ -61,8 +75,8 @@
 								<option value="nowUslfsvcCo" >현재내용년수</option>
 								<option value="prcNm" >공정명</option>
 								<option value="worktypeNm" >공종명</option>
-								<option value="splsysNm" >공급계통명</option>
-								<option value="splsysLocplcNm" >공급계통소재지</option>
+								<option value="splsysNm" >계통명</option>
+								<option value="splsysLocplcNm" >계통소재지</option>
 						</select>
 						<input type="text" name="searchValue" id="searchValue" value="" 
 							placeholder="검색할 내용을 입력해주세요"  
@@ -80,19 +94,21 @@
                     <colgroup>
                         <col style="width:3%">
                         <col style="width:6%">
+                        <col style="width:6%">
                         <col style="width:15%">
                         <col style="width:12%">
                         <col style="width:auto">
-                        <col style="width:8%">
-                        <col style="width:8%">
-                        <col style="width:8%">
-                        <col style="width:8%">
+                        <col style="width:6%">
+                        <col style="width:6%">
+                        <col style="width:6%">
+                        <col style="width:6%">
                         <col style="width:5%">
                     </colgroup>
                     <thead>
                         <tr>
                             <th scope="col">번호</th>
-                            <th scope="col">자산회계번호</th>
+                            <th scope="col">회계대분류</th>
+                            <th scope="col">회계자산번호</th>
                             <th scope="col">자산명</th>
                             <th scope="col">자산회계소분류명</th>
                             <th scope="col">소재지명</th>
@@ -116,22 +132,6 @@
     </div>
 </body>
 <script>
-$(function() {
-	
-	_list.paginationInit();
-	$("#splsysNm").val('${splsysNm}');
-	$("#prcNm").val('${prcNm}');
-	$("#worktypeNm").val('${worktypeNm}');
-	$("#searchName").val('${searchName}');
-	$("#searchValue").val('${searchValue}');
-	_list.getList(1);
-	//공급계통 function(urls, objs ,textNm,valueNm)
-	_commUtils.getSelectBox('/api/common/codes/SPSYS',$(".splsysNm"),"cdNm","cdNm"); 
-	//공정
-	_commUtils.getSelectBox('/api/common/codes/PRC',$(".prcNm"),"cdNm","cdNm"); 
-	//공종
-	_commUtils.getSelectBox('/api/common/codes/WTYPE',$(".worktypeNm"),"cdNm","cdNm"); 
 
-});
 </script>
 </html>

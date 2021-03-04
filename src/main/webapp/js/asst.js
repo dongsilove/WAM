@@ -9,6 +9,63 @@
  * 2021.03.02	ljpark		신규
  */
 
+$(function() {
+	
+	//공급계통 function(urls, objs ,textNm,valueNm)
+	_commUtils.getSelectBox('/api/common/codes/SPSYS',$(".splsysNm"),"cdNm","cdNm"); 
+	//공정
+	_commUtils.getSelectBox('/api/common/codes/PRC',$(".prcNm"),"cdNm","cdNm"); 
+	//공종
+	_commUtils.getSelectBox('/api/common/codes/WTYPE',$(".worktypeNm"),"cdNm","cdNm"); 
+	//회계대분류
+	_commUtils.getSelectBox('/api/common/codes/ACLCL',$(".asstAccntLclasNm"),"cdNm","cdNm").done(function(r){
+		if (mode == 'list') {
+			$("#splsysNm").val(splsysNm);		//공급계통
+			$("#prcNm").val(prcNm);			//공정
+			$("#worktypeNm").val(worktypeNm);	//공종
+			$("#asstAccntLclasNm").val(asstAccntLclasNm); //회계대분류
+			$("#asstAccntLclasNm option").map(function(idx,opt){
+				console.log(opt.value + ": " + opt.text);
+			});
+			$("#searchName").val(searchName);
+			$("#searchValue").val(searchValue);
+			_list.paginationInit();
+			_list.getList(1);
+		} else if (mode == 'edit') {
+			_list.getDetail(asstSn);
+		}
+	}); 
+
+
+	$("#detailForm").validate({
+		
+		submitHandler : function () { //validation이 끝난 이후의 submit 직전 추가 작업할 부분
+			console.log("validation 성공 이후 ");
+ 			_ajaxUtils.ajax({"url" : "/api/assts/", "method": "PUT", "form" : $("#detailForm")
+				,"successCallback": function(result) {
+					detailForm.reset();
+					alert("저장되었습니다.");
+					goList();
+				}
+			});
+		}
+		, rules: { //규칙 - id 값으로 
+			  asstCl       : {required:true} 								
+			, asstExprsnNm : {maxByteLength:200, required:true} 			
+			, asstNm        : {maxByteLength:200, required:true} 			    
+			, asstEnAbbr   : {maxlength:100, required:true} 	
+			, asstEnNm     : {maxlength:200} 							
+			, rm       : {maxByteLength:200} 							
+			, dataType       : {maxlength:100} 							
+			, dataLt         : {number:true} 							
+			, dcmlpointLt    : {number:true} 							
+			, exprsnFom      : {maxByteLength:100} 							
+			, unit           : {maxByteLength:50} 							
+			, permValDc      : {maxByteLength:2000} 							
+		}
+	});
+	
+});
 var _list = {
 	pagination : {}
 	,paginationInit : function() {
@@ -31,8 +88,9 @@ var _list = {
 				$("#listData").html(""); // 목록 초기화
 				data.content.forEach(function(f){
 					processNull(f);
+					
 					$("#listData").append("<tr onclick=\"_list.goEdit('"+f.asstSn+"')\">"
-						+"<td>" +f.asstSn+"</td><td>"+f.asstAccntNov+"</td><td>"
+						+"<td>" +f.asstSn+"</td><td>"+f.asstAccntLclasNm+"</td><td>"+f.asstAccntNov+"</td><td>"
 						+f.asstNm+"</td><td>"+f.asstAccntSclasNm+"</td><td>"
 						+f.locplcNm+"</td><td>"+f.frstAcqsYmd+"</td><td class='ralign'>"
 						+f.frstAcqsPc+"</td><td>"+f.revalYmd+"</td><td class='ralign'>"+f.revalAm+"</td><td>"+f.nowUslfsvcCo+"</td>"
@@ -55,9 +113,11 @@ var _list = {
 	,goEdit(asstSn) {
 		var params = $("#searchForm").serialize();
 		params = encodeURIComponent(params);
-		console.log(params);
-		
 		window.location = "/asst/edit?asstSn="+asstSn + "&params=" + params;
+	}
+	,goList() {
+		let params = decodeURIComponent($("#params").val());
+		window.location = "/asst/list?" + params;
 	}
 	,getDetail : function(asstSn) {
 		mode="PUT"; // 수정모드

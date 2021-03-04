@@ -11,6 +11,10 @@
 <!DOCTYPE html>
 <html lang="ko">
 <jsp:include page="/WEB-INF/jsp/layout/header.jsp"/>
+<script>
+var asstSn = '${asstSn}';
+var mode = 'edit';
+</script>
 <script src="/js/asst.js"></script>
  
 <body>
@@ -28,6 +32,7 @@
 	                <div class="write_inner">
 						<a href="#" onclick="detailForm.reset();">신규</a>
 						<a href="#" onclick="$('#detailForm').submit();">저장</a>
+						<a href="#" onclick="_list.goList();">목록</a>
 						<!-- <a href="#" onclick="_list.deleteOne();">삭제</a> -->
 					</div> 
 				</div>
@@ -63,7 +68,11 @@
                             <li><input type="text" name="rm" style="width:100%;"></li>
                         </ul>
                         <ul>
-                            <li class="required"><label for="asstAccntNov">자산회계번호</label></li>
+                            <li class="required"><label for="asstAccntLclasNm">자산회계대분류</label></li>
+                            <li><select name="asstAccntLclasNm" class="asstAccntLclasNm"></select></li>
+                        </ul>
+                        <ul>
+                            <li class="required"><label for="asstAccntNov">회계자산번호</label></li>
                             <li><input type="text" name="asstAccntNov" id="asstAccntNov"  value="" ></li>
                         </ul>
                         <ul>
@@ -183,45 +192,8 @@
 <script>
 $(function() {
 	
-	_list.getDetail('${asstSn}');
-	//공급계통 function(urls, objs ,textNm,valueNm)
-	_commUtils.getSelectBox('/api/common/codes/SPSYS',$(".splsysNm"),"cdNm","cdNm"); 
-	//공정
-	_commUtils.getSelectBox('/api/common/codes/PRC',$(".prcNm"),"cdNm","cdNm"); 
-	//공종
-	_commUtils.getSelectBox('/api/common/codes/WTYPE',$(".worktypeNm"),"cdNm","cdNm"); 
+	//_list.getDetail('${asstSn}');
 
-
-	$("#detailForm").validate({
-		
-		submitHandler : function () { //validation이 끝난 이후의 submit 직전 추가 작업할 부분
-			console.log("validation 성공 이후 ");
- 			_ajaxUtils.ajax({"url" : "/api/assts/", "method": "PUT", "form" : $("#detailForm")
-				,"successCallback": function(result) {
-					detailForm.reset();
-					alert("저장되었습니다.");
-					let params = decodeURIComponent($("#params").val());
-					console.log(params);
-					window.location = "/asst/list?" + params;
-				}
-			});
-		}
-		, rules: { //규칙 - id 값으로 
-			  asstCl       : {required:true} 								
-			, asstExprsnNm : {maxByteLength:200, required:true} 			
-			, asstNm        : {maxByteLength:200, required:true} 			    
-			, asstEnAbbr   : {maxlength:100, required:true} 	
-			, asstEnNm     : {maxlength:200} 							
-			, asstDc       : {maxByteLength:2000} 							
-			, dataType       : {maxlength:100} 							
-			, dataLt         : {number:true} 							
-			, dcmlpointLt    : {number:true} 							
-			, exprsnFom      : {maxByteLength:100} 							
-			, unit           : {maxByteLength:50} 							
-			, permValDc      : {maxByteLength:2000} 							
-		}
-	});
-	
 });
 </script>
 </html>
