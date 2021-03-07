@@ -37,7 +37,7 @@ var mode = 'edit';
 					</div> 
 				</div>
                 <div class="user_form task_list_wrap">
-                <form name="detailForm" id="detailForm" onsubmit="return false;">
+                <form name="detailForm" id="detailForm" enctype="multipart/form-data" onsubmit="return false">
 					<input type="hidden" name="params" id="params" value="${params}">
 					<input type="hidden" name="pk" value="">
 					<input type="hidden" name="page" value="">
@@ -175,6 +175,13 @@ var mode = 'edit';
                             <li><label for="modifyDt">수정일시</label></li>
                             <li><input type="text" name="modifyDt" id="modifyDt"  value="" readonly></li>
                         </ul>
+                        <ul>
+                            <li><label for="uploadFile">첨부파일</label></li>
+                            <li><input type="file" id="uploadFile" name="files[]" multiple="multiple"  style="margin-top:6px;">
+								</li>
+                        </ul>
+                        <ul></ul>
+                        <ul id="filelist" style="margin-top:10px;"></ul>
                     </div>
                     <!-- <div class="btn_user_form_wrap">
                         <input class="btn_user_modify" type="button" value="저장" >

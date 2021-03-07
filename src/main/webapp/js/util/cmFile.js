@@ -5,22 +5,22 @@
  * @Description 파일 관리
  */
 
-var cmFile = {
-	list : function(_tblNm,_tblSn){ 
+var _cmFile = {
+	list : function(_tableNm,_tableId){ 
 		var dfd = $.Deferred();
-		var param = {tblNm : _tblNm, tblSn:_tblSn};
+		//var param = {tableNm : _tableNm, tableId:_tableId};
 		$.ajax({
-	    	url: "/cmfile/list", 
-	    	type : "POST",
-	    	data: JSON.stringify(param),
+	    	url: "/api/cmfiles/" + _tableNm + "/" + _tableId, 
+	    	type : "GET",
+	    	//data: param,
 	    	dataType : "json",
 	    	contentType : "application/json;charset=UTF-8",
-	    	success: function (result) {
-	    		//console.log(result);
-	    		if(!result.list) { 
+	    	success: function (data) {
+	    		//console.log(data);
+	    		if(!data.content) { 
 	    			return dfd.reject();
 	    		} else {
-	    			return dfd.resolve(result.list);
+	    			return dfd.resolve(data.content);
 	    		}
 	        }
 			,error : function(request, error) {
@@ -29,21 +29,21 @@ var cmFile = {
 		});
 		return dfd.promise();
 	},
-	getCmFile : function(_tblNm,_tblSn){ 
+	getCmFile : function(_tableNm,_tableId){ 
 		var dfd = $.Deferred();
-		var param = {tblNm : _tblNm, tblSn:_tblSn};
+		var param = {tableNm : _tableNm, tableId:_tableId};
 		$.ajax({
-	    	url: "/cmfile/getCmFile", 
-	    	type : "POST",
-	    	data: JSON.stringify(param),
+	    	url: "/api/cmfiles/"+_tableNm + "/" + _tableId, 
+	    	type : "GET",
+	    	//data: param,
 	    	dataType : "json",
 	    	contentType : "application/json;charset=UTF-8",
-	    	success: function (result) {
-	    		//console.log(result);
+	    	success: function (data) {
+	    		//console.log(data);
 	    		if(!result.data) { 
 	    			return dfd.reject();
 	    		} else {
-	    			return dfd.resolve(result.data);
+	    			return dfd.resolve(data);
 	    		}
 	        }
 			,error : function(request, error) {
@@ -52,13 +52,13 @@ var cmFile = {
 		});
 		return dfd.promise();
 	},
-	fileDownload : function (savePath,saveFileNm,realFileNm) {
-		if(savePath!=null&&saveFileNm!=null&&realFileNm!=null){
-			location.href = "/cmfile/fileDownload?savePath="+savePath+"&saveFileNm="+saveFileNm+"&realFileNm="+realFileNm;
+	fileDownload : function (filePath,uploadFileNm,saveFileNm) {
+		if(filePath!=null&&uploadFileNm!=null&&saveFileNm!=null){
+			location.href = "/api/cmfiles/fileDownload?filePath="+filePath+"&uploadFileNm="+uploadFileNm+"&saveFileNm="+saveFileNm;
 		}
 	},
 	//개별 다운로드 
-	fn_fileDownload : function(_url) {
+	fileDownloadOne : function(_url) {
 		$.fileDownload( _url,{
 			httpMethod: "GET",
 			successCallback: function (url) {
@@ -68,11 +68,11 @@ var cmFile = {
 			}
 		});
 	},
-	delete : function(_tblNm,_tblSn){ 
+	delete : function(_tableNm,_tableId){ 
 		var dfd = $.Deferred();
-		var param = {tblNm : _tblNm, tblSn:_tblSn};
+		var param = {tableNm : _tableNm, tableId:_tableId};
 		$.ajax({
-	    	url: "/cmfile/delete", 
+	    	url: "/api/cmfiles/delete", 
 	    	type : "DELETE",
 	    	data: JSON.stringify(param),
 	    	dataType : "json",
@@ -91,21 +91,23 @@ var cmFile = {
 		});
 		return dfd.promise();
 	},
-	deleteOne : function(_fileSn){ 
+	deleteOne : function(_fileSn,_filePath,_saveFileNm){ 
 		var dfd = $.Deferred();
-		var param = {fileSn : _fileSn};
+		var param = {filePath : _filePath, saveFileNm : _saveFileNm};
 		$.ajax({
-	    	url: "/cmfile/deleteOne", 
+	    	url: "/api/cmfiles/"+_fileSn, 
 	    	type : "DELETE",
 	    	data: JSON.stringify(param),
 	    	dataType : "json",
 	    	contentType : "application/json;charset=UTF-8",
-	    	success: function (result) {
+	    	success: function (data) {
 	    		//console.log(result);
-	    		if(result.msg=='실패하였습니다.') { 
+	    		if(data!='200') { 
+					let rsltArr = data.split('|');
+					alert(rsltArr(1));
 	    			return dfd.reject();
 	    		} else {
-	    			return dfd.resolve(result.msg);
+	    			return dfd.resolve("삭제하였습니다.");
 	    		}
 	        }
 			,error : function(request, error) {
@@ -145,7 +147,8 @@ function fileUploadForm(){
 
 function fileDownloadForm(file) {
 	var layout = "";
-	layout +='<a class="pop_btn" onclick="fileDownload(\''+file.savePath+'\',\''+file.saveFileNm+'\',\''+file.realFileNm+'\')">'+file.realFileNm+'</a>';
+	layout +='<a class="pop_btn" onclick="fileDownload(\''+file.filePath+'\',\''
+		+file.uploadFileNm+'\',\''+file.saveFileNm+'\')">'+file.saveFileNm+'</a>';
 	return layout;
 }
 

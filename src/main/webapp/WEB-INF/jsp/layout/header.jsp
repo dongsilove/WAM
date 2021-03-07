@@ -20,14 +20,15 @@
 	<script src="/js/lib/tui-code-snippet/dist/tui-code-snippet.js"></script>
 	<script src="/js/lib/tui-pagination/dist/tui-pagination.js"></script><!-- tui-code-snippet.js 필요 -->
 	<script src="/js/lib/jquery/moment.js"></script>
+	<script src="/js/lib/jquery/jquery.form-3.51.0.js"></script><!-- 첨부파일 업로드: $(form).ajaxForm()  -->
+	<!-- <script src="/js/lib/jquery/jquery-fileDownload.js"></script> --><!-- 첨부파일 다운로드 : $.fileDownload() -->
 
     <script src="/js/util/validations.js"></script>
-    <!-- <script src="/js/util/common.js"></script> -->
-    <!-- <script src="/js/util/util.js"></script> -->
     <script src="/js/util/paging.js"></script>
     <script src="/js/util/commUtils.js"></script>
     <script src="/js/util/ajaxUtils.js"></script>
     <script src="/js/util/datepickerUtils.js"></script>
+    <script src="/js/util/cmFile.js"></script><!-- 첨부파일 -->
 
 	<script>
 	var loginId = '${loginInfo.userId}';
