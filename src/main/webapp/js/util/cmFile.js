@@ -94,6 +94,7 @@ var _cmFile = {
 	deleteOne : function(_fileSn,_filePath,_saveFileNm){ 
 		var dfd = $.Deferred();
 		var param = {filePath : _filePath, saveFileNm : _saveFileNm};
+		console.log(param);
 		$.ajax({
 	    	url: "/api/cmfiles/"+_fileSn, 
 	    	type : "DELETE",

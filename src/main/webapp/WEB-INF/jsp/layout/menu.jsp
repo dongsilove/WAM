@@ -7,7 +7,8 @@
             <ul>
                 <li><a href="#">인벤토리</a>
                     <ul class="depth">
-                        <li class="on"><a href="/asst/list"><i class="fas fa-book"></i>수원자산</a></li>
+                        <li class="on"><a href="/asst/list"><i class="fas fa-book"></i>수원회계자산대장</a></li>
+                        <li class="on"><a href="/asstfclty/list"><i class="fas fa-book"></i>수원시설</a></li>
                         <!-- <li><a href="/domain/page"><i class="far fa-square"></i>도메인</a></li>
                         <li><a href="/word/page"><i class="fas fa-cube"></i>단어</a></li>
                         <li><a href="/term/page"><i class="fas fa-cubes"></i>용어</a></li> -->
