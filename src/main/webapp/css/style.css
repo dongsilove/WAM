@@ -394,6 +394,8 @@ input[readonly] + .calendar, input[disabled] + .calendar { display: block; posit
 /* .ul_table ul li:nth-child(2){width:auto;} */
 .ul_table ul li {display:inline-block; padding:2px 0px;}
 
+#filelist a {display:inline-block; padding-bottom:10px;}
+
 .lalign {text-align:left;}
 .calign {text-align:center;}
 .ralign {text-align:right;}

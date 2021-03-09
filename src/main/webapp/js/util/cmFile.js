@@ -93,16 +93,17 @@ var _cmFile = {
 	},
 	deleteOne : function(_fileSn,_filePath,_saveFileNm){ 
 		var dfd = $.Deferred();
-		var param = {filePath : _filePath, saveFileNm : _saveFileNm};
+		var param = {fileSn : _fileSn, filePath : _filePath, saveFileNm : _saveFileNm};
 		console.log(param);
 		$.ajax({
-	    	url: "/api/cmfiles/"+_fileSn, 
+	    	//url: "/api/cmfiles/"+_fileSn, 
+	    	url: "/api/cmfiles", 
 	    	type : "DELETE",
 	    	data: JSON.stringify(param),
 	    	dataType : "json",
 	    	contentType : "application/json;charset=UTF-8",
 	    	success: function (data) {
-	    		//console.log(result);
+	    		console.log(data);
 	    		if(data!='200') { 
 					let rsltArr = data.split('|');
 					alert(rsltArr(1));

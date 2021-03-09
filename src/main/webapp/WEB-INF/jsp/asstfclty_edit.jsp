@@ -169,9 +169,9 @@ var mode = 'edit';
 								</li>
                         </ul>
                         
-                        <ul id="filelist" style="margin-top:10px;"></ul>
+                        
                     </div>
-                
+                	<ul id="filelist" style="margin-top:10px;"></ul>
                 </form>
                 </div>            	
             	

@@ -102,14 +102,20 @@ public class TCmFileApiController {
 	}
 	
 	@Operation(summary = "파일 삭제", description = "파일 삭제한다.")
-	@DeleteMapping("/cmfiles/{fileSn}")
-	public String delete(@PathVariable Integer fileSn, @RequestParam Map<String,Object> param) throws Exception {
+	@DeleteMapping("/cmfiles")
+	public String delete(@RequestBody Map<String,Object> param  ) throws Exception { //, @RequestParam Map<String,Object> param
 		
-		log.debug("파일 삭제 호출 :"+  Integer.toString(fileSn));
+		//log.debug("파일 삭제 호출 delete() :"+  Integer.toString(fileSn));
 		
 		param.forEach((k,v)->log.debug("key:" + k + "\tvalue:" +v));
-		if (param.get("filePath") == null) return "201|filePath parameter 누락";
-		if (param.get("saveFileNm") == null) return "201|saveFileNm parameter 누락";
+		if (param.get("filePath") == null || param.get("filePath").toString().equals("")) 
+			return "201|filePath parameter 누락";
+		if (param.get("saveFileNm") == null || param.get("saveFileNm").toString().equals("")) 
+			return "201|saveFileNm parameter 누락";
+		if (param.get("fileSn") == null || param.get("fileSn").toString().equals("")) 
+			return "201|fileSn parameter 누락";
+		
+		Integer fileSn = Integer.parseInt(param.get("fileSn").toString());
 		CmFileUtils.deleteFileOne(param.get("filePath").toString(), param.get("saveFileNm").toString());
 		
 		fileRepository.deleteById(fileSn);
@@ -119,10 +125,10 @@ public class TCmFileApiController {
 	}
 	
 	@Operation(summary = "자료의 첨부파일 삭제", description = "자료의 TABLE명, TABLE 기본키에 해당하는 파일들을 삭제한다.")
-	@DeleteMapping("/cmfiles/{tableNm}/{tableId")
+	@DeleteMapping("/cmfiles/{tableNm}/{tableId}")
 	public String deleteByTableNmAndTableId(@PathVariable String tableNm, @PathVariable String tableId) throws Exception {
 		
-		log.debug("파일 삭제 호출 :"+ tableNm + "," + tableId);
+		log.debug("파일 삭제 호출 deleteByTableNmAndTableId() :"+ tableNm + "," + tableId);
 		
 		int page = 1, perPage = 20;
 		PageRequest pageRequest = PageRequest.of(page - 1, perPage);
@@ -164,7 +170,7 @@ public class TCmFileApiController {
 				bfile = Files.readAllBytes(Paths.get(fullPath));
 			} else {
 				System.out.println("=====경로 상의 파일을 찾을 수 없습니다.====");	
-				ClassPathResource resource = new ClassPathResource("/images/noImage.jpg"); 
+				ClassPathResource resource = new ClassPathResource("noImage.jpg"); 
 				File noImageFile = resource.getFile();
 				bfile = FileCopyUtils.copyToByteArray(noImageFile);
 			}
