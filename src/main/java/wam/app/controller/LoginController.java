@@ -10,7 +10,7 @@ public class LoginController {
 	
 	@GetMapping("/")
 	public String main() throws Exception {
-		return "redirect:/govword/page";
+		return "redirect:/asstfclty/list";
 	}
 	
 	@GetMapping("/login/page")

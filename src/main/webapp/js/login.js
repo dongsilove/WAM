@@ -24,7 +24,7 @@ $(function() {
 				success : function(data) {
 					console.log(data);
 					if(data == '200') {
-						location.href = "/asst/list";
+						location.href = "/asstfclty/list";
 					} else {
 						alert("로그인아이디가 없거나 로그인 정보가 일치 하지 않습니다.");
 					}

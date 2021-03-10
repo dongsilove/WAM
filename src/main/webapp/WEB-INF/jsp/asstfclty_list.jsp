@@ -58,7 +58,7 @@ var searchValue = '${searchValue}';
 						</span>
 						
 						<select name="searchName" id="searchName" >
-								<option value=''>검색선택</option>
+								<option value='asstSn'>자산조사번호</option>
 								<option value="asstNm" >자산명</option>
 								<option value="locplcNm" >설치위치</option>
 								<option value="fomNm" >형식 및 용량</option>
@@ -67,6 +67,7 @@ var searchValue = '${searchValue}';
 								<option value="worktypeNm" >공종명</option>
 								<option value="splsysNm" >계통명</option>
 								<option value="splsysLocplcNm" >계통소재지</option>
+								<option value="modifyId" >수정아이디</option>
 						</select>
 						<input type="text" name="searchValue" id="searchValue" value="" 
 							placeholder="검색할 내용을 입력해주세요"  
@@ -91,11 +92,12 @@ var searchValue = '${searchValue}';
                         <col style="width:20%">
                         <col style="width:6%">
                         <col style="width:7%">
+                        <col style="width:7%">
                     </colgroup>
                     <thead>
                         <tr>
                             <th scope="col">번호</th>
-                            <th scope="col">시설위치</th>
+                            <th scope="col">설치위치</th>
                             <th scope="col">계통</th>
                             <th scope="col">공정</th>
                             <th scope="col">공종</th>
@@ -103,6 +105,7 @@ var searchValue = '${searchValue}';
                             <th scope="col">형식 및 용량</th>
                             <th scope="col">설치일</th>
                             <th scope="col">제조사</th>
+                            <th scope="col">수정아이디</th>
                         </tr>
                     </thead>
                     <tbody id="listData">

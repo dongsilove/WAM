@@ -64,7 +64,7 @@ public class CmFileUtils {
         for (MultipartFile mf : fileList) {
             uploadFileNm = mf.getOriginalFilename();// 원본 파일 명
     		uploadFileExtension = uploadFileNm.substring(uploadFileNm.lastIndexOf("."));
-    		saveFileNm = getRandomString() + uploadFileExtension;
+    		saveFileNm = tableNm+"_"+tableId+"_" + getRandomString() + uploadFileExtension; //getRandomString();
     		long fileSize = mf.getSize(); // 파일 사이즈
 
             String safeFile = savePath + File.separator + saveFileNm;
@@ -192,7 +192,7 @@ public class CmFileUtils {
 	 * @see
 	 */
 	public static String getRandomString(){
-		return UUID.randomUUID().toString().replaceAll("-", "");
+		return UUID.randomUUID().toString().substring(0,10).replaceAll("-", "");
 	}
 	
     //public static String getExcelPath() {

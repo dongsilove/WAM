@@ -67,6 +67,9 @@ public class TAmAsstFcltyQuerydslRepository extends QuerydslRepositorySupport {
 		if(param.get("splsysLocplcNm") != null && !param.get("splsysLocplcNm").toString().equals("")) { 
 			booleanBuilder.and( tAmAsstFclty.splsysLocplcNm.contains(param.get("splsysLocplcNm").toString()) );
 		}
+		if(param.get("modifyId") != null && !param.get("modifyId").toString().equals("")) { 
+			booleanBuilder.and( tAmAsstFclty.modifyId.contains(param.get("modifyId").toString()) );
+		}
 
 		query = query.where(booleanBuilder).orderBy(tAmAsstFclty.asstSn.desc());
 		final List<TAmAsstFclty> result = getQuerydsl().applyPagination(pageable, query).fetch();

@@ -21,7 +21,8 @@ $(function() {
 			$("#splsysNm").val(splsysNm);		//공급계통
 			$("#prcNm").val(prcNm);			//공정
 			$("#worktypeNm").val(worktypeNm);	//공종
-			$("#searchName").val(searchName);
+			if (!searchName) {$("#searchName").val("asstSn");}
+			else $("#searchName").val(searchName);
 			$("#searchValue").val(searchValue);
 			_list.paginationInit();
 			_list.getList(1);
@@ -88,7 +89,7 @@ var _list = {
 		//$("#searchfrm")[0].reset(); //오른쪽 상세정보 리셋
 		
 		_ajaxUtils.ajax({"url" : "/api/asstfcltys", "form" : $("#searchForm")
-			,"successCallback": function(data) { //console.log(data);
+			,"successCallback": function(data) { console.log(data);
 				$("#listData").html(""); // 목록 초기화
 				data.content.forEach(function(f){
 					processNull(f);
@@ -97,7 +98,7 @@ var _list = {
 						+"<td>" +f.asstSn+"</td><td>"+f.locplcNm+"</td><td>"+f.splsysNm+"</td><td>"
 						+f.prcNm+"</td><td>"+f.worktypeNm+"</td><td>"
 						+f.asstNm+"</td><td>"+f.fomNm+"</td><td>"
-						+f.installYmd+"</td><td>"+f.makrNm
+						+f.installYmd+"</td><td>"+f.makrNm+"</td><td>"+f.modifyId
 						+"</td></tr>"
 					);
 				});
@@ -185,6 +186,6 @@ function deleteOneFile(_fileSn, filePath, saveFileNm) {
 	console.log("삭제 호출" + _fileSn);
 	_cmFile.deleteOne(_fileSn,filePath,saveFileNm).done(function(msg) {
 		alert(msg);
-		_list.getDetail(asstSn); // 상세조회 다시
+		_list.goEdit(asstSn) // 상세조회 다시
 	});
 }
