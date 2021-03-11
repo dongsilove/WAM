@@ -1,24 +1,27 @@
 package wam.app.util;
 
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URLEncoder;
-import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.poi.util.StringUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-
 
 import wam.app.w.file.TCmFile;
 
@@ -49,6 +52,7 @@ public class CmFileUtils {
 		MultipartHttpServletRequest mtfRequest = (MultipartHttpServletRequest)request;
     	List<MultipartFile> fileList = mtfRequest.getFiles("files[]");
 
+    	List<String> IMAGE_EXTENTIONS = Arrays.asList(".jpeg", ".jpg", ".png", ".gif");
     	String uploadFileNm = null;
     	String uploadFileExtension = null;
     	String saveFileNm = null;
@@ -58,18 +62,23 @@ public class CmFileUtils {
  		List<TCmFile> fileVOList = new ArrayList<TCmFile>();
  		int seqNum = 0;
         File file = new File(savePath);
-        if(file.exists() == false){
+        if(file.exists() == false){ // 저장할 디렉토리가 없다면 생성
         	file.mkdirs();
         }
         for (MultipartFile mf : fileList) {
             uploadFileNm = mf.getOriginalFilename();// 원본 파일 명
-    		uploadFileExtension = uploadFileNm.substring(uploadFileNm.lastIndexOf("."));
+    		uploadFileExtension = uploadFileNm.substring(uploadFileNm.lastIndexOf(".")); // 확장자
+    		uploadFileExtension = uploadFileExtension.toLowerCase();
     		saveFileNm = tableNm+"_"+tableId+"_" + getRandomString() + uploadFileExtension; //getRandomString();
     		long fileSize = mf.getSize(); // 파일 사이즈
 
             String safeFile = savePath + File.separator + saveFileNm;
             try {
-                mf.transferTo(new File(safeFile));
+            	if (IMAGE_EXTENTIONS.contains(uploadFileExtension)) { // 이미지이면 크기 줄이기
+            		resizeFile(safeFile, mf); // 크기 줄여 저장
+            	} else {
+            		mf.transferTo(new File(safeFile)); // file 저장
+            	}
                 fileVO = new TCmFile();
      			//fileVO.setFileSn(fileSn);
      			fileVO.setTableNm(tableNm);
@@ -93,6 +102,69 @@ public class CmFileUtils {
 		return fileVOList;
 	}
 
+	public static void resizeFile(String fileName, MultipartFile mf) {
+        int newlength = 800;	// 변경 너비 or 높기
+        String imgFormat = fileName.substring(fileName.indexOf(".")+1);
+        Image image;
+        int imageWidth;
+        int imageHeight;
+        double ratio;
+        int w = 0;
+        int h = 0;
+ 
+        try{
+            // 원본 이미지 가져오기
+            //image = ImageIO.read(new File(fileName)); // filepath로 Image가져오기
+        	
+        	byte[] b = mf.getBytes();
+        	ByteArrayInputStream bufferedStream = new ByteArrayInputStream(b); // byte[]로 Image가져오기
+        	image = ImageIO.read(bufferedStream);
+ 
+            // 원본 이미지 사이즈 가져오기
+            imageWidth = image.getWidth(null);
+            imageHeight = image.getHeight(null);
+ 
+            if (imageWidth > newlength || imageHeight > newlength) { // 기준길이 보다 길면
+            	
+	            if(imageWidth > imageHeight){    // 넓이기준
+	 
+	                ratio = (double)newlength/(double)imageWidth;
+	                w = (int)(imageWidth * ratio);
+	                h = (int)(imageHeight * ratio);
+	 
+	            } else if (imageHeight > imageWidth) { // 높이기준
+	 
+	                ratio = (double)newlength/(double)imageHeight;
+	                w = (int)(imageWidth * ratio);
+	                h = (int)(imageHeight * ratio);
+	 
+	            }
+	            // 이미지 리사이즈
+	            // Image.SCALE_DEFAULT : 기본 이미지 스케일링 알고리즘 사용
+	            // Image.SCALE_FAST    : 이미지 부드러움보다 속도 우선
+	            // Image.SCALE_REPLICATE : ReplicateScaleFilter 클래스로 구체화 된 이미지 크기 조절 알고리즘
+	            // Image.SCALE_SMOOTH  : 속도보다 이미지 부드러움을 우선
+	            // Image.SCALE_AREA_AVERAGING  : 평균 알고리즘 사용
+	            Image resizeImage = image.getScaledInstance(w, h, Image.SCALE_SMOOTH);
+	 
+	            // 새 이미지  저장하기
+	            BufferedImage newImage = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+	            Graphics g = newImage.getGraphics();
+	            g.drawImage(resizeImage, 0, 0, null);
+	            g.dispose();
+	            ImageIO.write(newImage, imgFormat, new File(fileName));
+	            
+            } else {
+            	mf.transferTo(new File(fileName)); // file 저장
+            	return;
+            }
+ 
+ 
+        }catch (Exception e){
+            e.printStackTrace();
+        }		
+	}
+	
     /**
      * 파일 다운로드
      * @param request
