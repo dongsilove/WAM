@@ -163,8 +163,8 @@ var _list = {
 					event.preventDefault();
 					_cmFile.fileDownload(data.filePath, data.uploadFileNm, data.saveFileNm);
 				});
-				$('#uploadFileName'+idx).append('&nbsp;&nbsp;<a href="#" onclick="deleteOneFile('+data.fileSn
-					+ ',\"' + data.filePath + '\",\"' + data.saveFileNm+'\")" '
+				$('#uploadFileName'+idx).append('&nbsp;<a href="#" onclick="deleteOneFile('+data.fileSn
+					+ ',\'' + data.filePath + '\',\'' + data.saveFileNm+'\')" '
 					+'title="파일 삭제"><img src="/images/btn_edit_del.png"/></a>&nbsp;');
 				var arrFileType = ['jpg','png','gif'];
 				if (arrFileType.indexOf(data.fileTy.toLowerCase()) < 0) return; // 이미지 파일이 아니면 이미지 보여주기 필요없음.
@@ -201,6 +201,6 @@ var _list = {
 function deleteOneFile(_fileSn, filePath, saveFileNm) {
 	_cmFile.deleteOne(_fileSn,filePath,saveFileNm).done(function(msg) {
 		alert(msg);
-		_list.getDetail(asstSn); // 상세조회 다시
+		_list.goEdit(asstSn) // 상세조회 다시
 	});
 }

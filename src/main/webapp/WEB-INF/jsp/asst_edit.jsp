@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
 //========================================
-// @brief 데이터사전 > 자산 > 등록,수정
+// @brief 데이터사전 > 수원회계자산대장 > 등록,수정
 //========================================
 // @history 
 //  	2021.03.02 박이정(마인드원) 최초작성
@@ -25,8 +25,8 @@ var mode = 'edit';
 
         <div class="container">
             <div class="title">
-            	<div style="float:left;"><h1>자산</h1></div>
-            	<div class="location"><ul><li class="home"></li><li>인벤토리</li><li>자산</li></ul></div>
+            	<div style="float:left;"><h1>수원회계자산대장</h1></div>
+            	<div class="location"><ul><li class="home"></li><li>인벤토리</li><li>수원회계자산대장</li></ul></div>
             </div>
                 <div class="writer task_list_wrap">
 	                <div class="write_inner">

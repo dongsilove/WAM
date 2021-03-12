@@ -103,7 +103,7 @@ public class CmFileUtils {
 	}
 
 	public static void resizeFile(String fileName, MultipartFile mf) {
-        int newlength = 800;	// 변경 너비 or 높기
+        int newlength = 1200;	// 기준길이
         String imgFormat = fileName.substring(fileName.indexOf(".")+1);
         Image image;
         int imageWidth;
