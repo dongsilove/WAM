@@ -13,9 +13,10 @@
 <jsp:include page="/WEB-INF/jsp/layout/header.jsp"/>
 <script>
 var mode = 'list';
-var splsysNm = '${splsysNm}';
-var prcNm = '${prcNm}';
-var worktypeNm = '${worktypeNm}';
+var splsysLocplcNm = '${splsysLocplcNm}'; // 계통소재지명
+var splsysNm = '${splsysNm}'; 		// 계통
+var prcNm = '${prcNm}';				// 공정
+var worktypeNm = '${worktypeNm}';	// 공종
 var searchName = '${searchName}';
 var searchValue = '${searchValue}';
 </script>
@@ -41,6 +42,12 @@ var searchValue = '${searchValue}';
 						<input type="hidden" id="page" name="page">
 						<input type="hidden" id="searchtmp" name="" value=""  />
 						
+						<span> 계통소재지 : 
+							<select name="splsysLocplcNm" id="splsysLocplcNm" onChange="_list.getList(1);" class="splsysLocplcNm">
+								   <option value='파장정수장' selected="selected">파장정수장 </option>
+								   <option value='광교정수장'>광교정수장 </option>
+							</select>
+						</span>
 						<span> 계통 : 
 							<select name="splsysNm" id="splsysNm" onChange="_list.getList(1);" class="splsysNm">
 								   <option value=''> </option>
@@ -84,6 +91,7 @@ var searchValue = '${searchValue}';
                 <table id="list_t">
                     <colgroup>
                         <col style="width:3%">
+                        <col style="width:6%">
                         <col style="width:15%">
                         <col style="width:6%">
                         <col style="width:7%">
@@ -97,6 +105,7 @@ var searchValue = '${searchValue}';
                     <thead>
                         <tr>
                             <th scope="col">번호</th>
+                            <th scope="col">계통소재지</th>
                             <th scope="col">설치위치</th>
                             <th scope="col">계통</th>
                             <th scope="col">공정</th>

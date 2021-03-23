@@ -48,16 +48,26 @@ var mode = 'edit';
                             	<label><input type="checkbox" name="asstCnfirmYn" value="Y">자산확인</label></li>
                         </ul>
                         <ul>
+                            <li class="required"><label for="splsysLocplcNm">계통소재지명</label></li>
+                            <li><input type="text" name="splsysLocplcNm" id="splsysLocplcNm" value=""></li>
+                        </ul>
+                        <ul>
                             <li class="required"><label for="splsysNm">계통</label></li>
-                            <li><select name="splsysNm" class="splsysNm"></select></li>
+                            <li><input type="text" name="splsysNm" id="splsysNm"></li>
+                            <!-- <select name="splsysNm" class="splsysNm"></select> -->
                         </ul>
                         <ul>
                             <li class="required"><label for="prcNm">공정</label></li>
-                            <li><select name="prcNm" class="prcNm"></select></li>
+                            <li><input type="text" name="prcNm" class="prcNm"></li>
+                            <!-- <li><select name="prcNm" class="prcNm"></select></li> -->
                         </ul>
                         <ul>
                             <li class="required"><label for="worktypeNm">공종</label></li>
                             <li><select name="worktypeNm" class="worktypeNm"></select></li>
+                        </ul>
+                        <ul>
+                            <li class="required"><label for="lclasNm">분류</label></li>
+                            <li><input type="text" name="lclasNm" id="lclasNm"  value="" ></li>
                         </ul>
                         <ul>
                             <li class="required"><label for="asstNm">자산명</label></li>
@@ -71,10 +81,11 @@ var mode = 'edit';
                             <li class="required"><label for="locplcNm">설치위치(소재지)</label></li>
                             <li><input type="text" name="locplcNm" id="locplcNm"  value=""  style="width:100%;"></li>
                         </ul>
-                        <!-- <ul>
+                        <ul>
                             <li><label for="useYn">사용여부(불용여부)</label></li>
                             <li><input type="text" name="useYn" id="useYn"  value="" ></li>
                         </ul>
+                        <!-- 
                         <ul>
                             <li class="required"><label for="frstAcqsYmd">최초취득일</label></li>
                             <li><input type="text" name="frstAcqsYmd" id="frstAcqsYmd"  value="" ></li>

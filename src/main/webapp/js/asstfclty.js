@@ -18,8 +18,9 @@ $(function() {
 	//공종
 	_commUtils.getSelectBox('/api/common/codes/WTYPE',$(".worktypeNm"),"cdNm","cdNm").done(function(r){
 		if (mode == 'list') {
+			$("#splsysLocplcNm").val(splsysLocplcNm);		//계통소재지명
 			$("#splsysNm").val(splsysNm);		//공급계통
-			$("#prcNm").val(prcNm);			//공정
+			$("#prcNm").val(prcNm);				//공정
 			$("#worktypeNm").val(worktypeNm);	//공종
 			if (!searchName) {$("#searchName").val("asstSn");}
 			else $("#searchName").val(searchName);
@@ -46,8 +47,14 @@ $(function() {
 			return true;
 		}
 		, rules: { //규칙 - id 값으로 
-			 asstNm        : {maxByteLength:200, required:true} 			    
-			, rm       		: {maxByteLength:200} 							
+			 asstNm        : {maxByteLength:200, required:true} // 자산명			    
+			, rm       		: {maxByteLength:200} 			// 비고				
+			, locplcNm		: {maxByteLength:200} 			// 소재지명				
+			, co			: {maxlength:200} 				// 수량	
+			, fomNm			: {maxByteLength:200} 			// 형식명 				
+			, stndrdNm		: {maxByteLength:200} 			// 규격명		
+			, installYmd	: {maxlength:10} 				// 설치일	
+			, makrNm		: {maxByteLength:200} 			// 제조사명			
 		}
 	});
 
@@ -58,6 +65,7 @@ $(function() {
 		contentType : "application/json;charset=UTF-8",
 		type: "PUT",
 		beforeSubmit: function (data,form,option) {
+			console.log("ajaxForm의 beforSubmit");
 		},
 		success: function(data){
 			//detailForm.reset();
@@ -95,7 +103,7 @@ var _list = {
 					processNull(f);
 					
 					$("#listData").append("<tr onclick=\"_list.goEdit('"+f.asstSn+"')\">"
-						+"<td>" +f.asstSn+"</td><td>"+f.locplcNm+"</td><td>"+f.splsysNm+"</td><td>"
+						+"<td>" +f.asstSn+"</td><td>"+f.splsysLocplcNm+"</td><td>"+f.locplcNm+"</td><td>"+f.splsysNm+"</td><td>"
 						+f.prcNm+"</td><td>"+f.worktypeNm+"</td><td>"
 						+f.asstNm+"</td><td>"+f.fomNm+"</td><td>"
 						+f.installYmd+"</td><td>"+f.makrNm+"</td><td>"+f.modifyId
