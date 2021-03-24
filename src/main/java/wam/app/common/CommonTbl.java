@@ -30,6 +30,7 @@ import lombok.Setter;
 public abstract class CommonTbl {
 	//@Temporal(TemporalType.TIMESTAMP)
 	//@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	@CreatedDate
 	@Column(name="regist_dt")
 	@Schema(description ="등록 일시" )

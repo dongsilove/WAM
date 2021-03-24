@@ -27,9 +27,14 @@ public class TAmAsstFcltyController {
 	}
 
 	@GetMapping("/asstfclty/edit")
-	public String asst_edit(@RequestParam Integer asstSn,@RequestParam String params, ModelMap model) throws Exception {
-		model.addAttribute("asstSn", asstSn);
-		model.addAttribute("params", params);
+	public String asst_edit(@RequestParam Map<String,Object> params, ModelMap model) throws Exception {
+		
+		if (params.get("asstSn") != null && !params.get("asstSn").toString().equals("")) {
+			model.addAttribute("asstSn", params.get("asstSn").toString());
+		}
+		if (params.get("params") != null && !params.get("params").toString().equals("")) {
+			model.addAttribute("params", params.get("params").toString());
+		}
 		return "asstfclty_edit";
 	}
 	

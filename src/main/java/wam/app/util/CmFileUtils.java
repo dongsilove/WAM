@@ -60,7 +60,7 @@ public class CmFileUtils {
     	
         TCmFile fileVO = null;
  		List<TCmFile> fileVOList = new ArrayList<TCmFile>();
- 		int seqNum = 0;
+ 		//int seqNum = 0;
         File file = new File(savePath);
         if(file.exists() == false){ // 저장할 디렉토리가 없다면 생성
         	file.mkdirs();
@@ -91,7 +91,7 @@ public class CmFileUtils {
      			fileVO.setUseYn("Y");
      			fileVO.setRegistId("admin");
      			fileVOList.add(fileVO);
-     			seqNum++;
+     			//seqNum++;
             } catch (IllegalStateException e) {
                 e.printStackTrace();
             } catch (IOException e) {

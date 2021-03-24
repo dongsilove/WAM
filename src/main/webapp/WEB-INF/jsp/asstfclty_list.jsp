@@ -82,6 +82,7 @@ var searchValue = '${searchValue}';
 					</form>
 					</div>
 					<a href="#" onclick="_list.getList(1);">조회</a>
+					<a href="/asstfclty/edit">등록</a>
 				</div> 
 				
 			</div>

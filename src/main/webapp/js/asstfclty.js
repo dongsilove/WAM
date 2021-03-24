@@ -22,7 +22,7 @@ $(function() {
 			$("#splsysNm").val(splsysNm);		//공급계통
 			$("#prcNm").val(prcNm);				//공정
 			$("#worktypeNm").val(worktypeNm);	//공종
-			if (!searchName) {$("#searchName").val("asstSn");}
+			if (!searchName) {$("#searchName").val("asstSn");} // default 검색 "자산조사번호"
 			else $("#searchName").val(searchName);
 			$("#searchValue").val(searchValue);
 			_list.paginationInit();
@@ -71,7 +71,8 @@ $(function() {
 			//detailForm.reset();
 			alert("저장되었습니다.");
 			//_list.goList();	
-			_list.getDetail(asstSn);
+			if (asstSn) _list.getDetail(asstSn);
+			else windows.location = "/asstfclty/list";
 		},
 		error:function(request,status,error){
             alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -133,8 +134,9 @@ var _list = {
 		window.location = "/asstfclty/list?" + params;
 	}
 	,getDetail : function(asstSn) {
+		if (!asstSn) return;
 		
-		mode="PUT"; // 수정모드
+		//mode="PUT"; // 수정모드
 		_ajaxUtils.ajax({"url" : "/api/asstfcltys/"+asstSn
 			,"successCallback": function(data) { console.log(data);
 				for(key in data) {	
