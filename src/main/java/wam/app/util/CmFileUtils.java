@@ -3,6 +3,7 @@ package wam.app.util;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -23,6 +24,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.drew.imaging.ImageMetadataReader;
+import com.drew.imaging.ImageProcessingException;
+import com.drew.metadata.Directory;
+import com.drew.metadata.Metadata;
+import com.drew.metadata.MetadataException;
+import com.drew.metadata.exif.ExifIFD0Directory;
+
 import wam.app.w.file.TCmFile;
 
 
@@ -30,15 +38,15 @@ import wam.app.w.file.TCmFile;
 @Component("cmFileUtils")
 public class CmFileUtils {
 	@Value("${Globals.uploadPath}")
-	private static String uploadPath;
+	private String uploadPath;
 
     @Value("${Globals.uploadPath}")
     private void setUploadPath(String uploadPath){
-    	CmFileUtils.uploadPath = uploadPath;
+    	this.uploadPath = uploadPath;
     }
 	
-	public static String getUploadPath() {
-		return uploadPath;
+	public String getUploadPath() {
+		return this.uploadPath;
 	}
 	
 	/**
@@ -48,7 +56,7 @@ public class CmFileUtils {
 	 * @return
 	 * @throws Exception
 	 */
-	public static List<TCmFile> saveMultiFile(String tableNm, String tableId, HttpServletRequest request,String path) throws Exception{
+	public List<TCmFile> saveMultiFile(String tableNm, String tableId, HttpServletRequest request,String path) throws Exception{
 		MultipartHttpServletRequest mtfRequest = (MultipartHttpServletRequest)request;
     	List<MultipartFile> fileList = mtfRequest.getFiles("files[]");
 
@@ -102,7 +110,7 @@ public class CmFileUtils {
 		return fileVOList;
 	}
 
-	public static void resizeFile(String fileName, MultipartFile mf) {
+	public void resizeFile(String fileName, MultipartFile mf) {
         int newlength = 1000;	// 기준길이
         String imgFormat = fileName.substring(fileName.indexOf(".")+1);
         Image image;
@@ -115,9 +123,9 @@ public class CmFileUtils {
         try{
             // 원본 이미지 가져오기
             //image = ImageIO.read(new File(fileName)); // filepath로 Image가져오기
-        	
         	byte[] b = mf.getBytes();
         	ByteArrayInputStream bufferedStream = new ByteArrayInputStream(b); // byte[]로 Image가져오기
+        	int orientation = getOrientation(bufferedStream);
         	image = ImageIO.read(bufferedStream);
  
             // 원본 이미지 사이즈 가져오기
@@ -165,18 +173,36 @@ public class CmFileUtils {
         }		
 	}
 	
+    public int getOrientation(BufferedInputStream is) throws IOException {
+	    int orientation = 1;
+	    try {
+		    Metadata metadata = ImageMetadataReader.readMetadata(is);
+		    //Directory directory = metadata.getDirectory(ExifIFD0Directory.class);
+		    for (Directory directory0 : metadata.getDirectories()) {
+		    	try {
+		    		orientation = directory0.getInt(ExifIFD0Directory.TAG_ORIENTATION);
+		    	} catch (MetadataException e) {
+		    		e.printStackTrace();
+		    	}
+		    }
+		} catch (ImageProcessingException e) {
+		    e.printStackTrace();
+		}
+	    return orientation;
+    }
+    
     /**
      * 파일 다운로드
      * @param request
      * @param response
      * @throws IOException
      */
-    public static void download(String fileName,String fileNameOrg,String filePath
+    public void download(String fileName,String fileNameOrg,String filePath
     		,HttpServletRequest request,HttpServletResponse response) throws IOException{
     	FileInputStream fileInputStream = null;
   	    ServletOutputStream servletOutputStream = null;
 		try{
-	  	    File file = new File(uploadPath + filePath,fileName);
+	  	    File file = new File(this.uploadPath + filePath,fileName);
 	  	    if (!file.exists()) {
 	  	    	System.out.println("file does not exist!!");
 	  	    	return;
@@ -229,7 +255,7 @@ public class CmFileUtils {
 	 * @param fileVOList 삭제 {@link TCmFile} 리스트 정보.
 	 * @throws Exception
 	 */
-	public static void deleteFiles(List<TCmFile> fileVOList) throws Exception {
+	public void deleteFiles(List<TCmFile> fileVOList) throws Exception {
 		File targetFile = null;
 
 		for(TCmFile fileVO : fileVOList) {
@@ -245,7 +271,7 @@ public class CmFileUtils {
 	 * @param filePath 파일중간경로, saveFileNm 저장파일명
 	 * @throws Exception
 	 */
-	public static void deleteFileOne(String filePath, String saveFileNm) throws Exception {
+	public void deleteFileOne(String filePath, String saveFileNm) throws Exception {
 		
 		if (filePath == null || filePath.equals("")) return;
 		if (saveFileNm == null || saveFileNm.equals("")) return;
@@ -263,7 +289,7 @@ public class CmFileUtils {
 	 * @return String 형식의 랜덤 숫자를 리턴한다.
 	 * @see
 	 */
-	public static String getRandomString(){
+	public String getRandomString(){
 		return UUID.randomUUID().toString().substring(0,10).replaceAll("-", "");
 	}
 	

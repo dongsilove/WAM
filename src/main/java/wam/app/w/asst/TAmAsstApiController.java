@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,12 +13,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,6 +43,9 @@ public class TAmAsstApiController {
 	TAmAsstQuerydslRepository asstQuerydslRepository;
 	@Autowired
 	TCmFileRepository fileRepository;
+	@Autowired
+	CmFileUtils cmFileUtils;
+
 
 	@Operation(summary = "자산 목록 조회", description = "검색 값으로 페이징된 자산 목록 화면을 호출한다.")
 	@GetMapping("/assts")
@@ -86,7 +85,7 @@ public class TAmAsstApiController {
 			String tableId = asst.getAsstSn().toString();
 			String path = tableNm;
 			log.debug("tableId : " + tableId);
-			List<TCmFile> fileList = CmFileUtils.saveMultiFile(tableNm,tableId,request,path); // 파일 저장
+			List<TCmFile> fileList = cmFileUtils.saveMultiFile(tableNm,tableId,request,path); // 파일 저장
 			for(TCmFile vo :fileList) {
 				fileRepository.save(vo); // 파일정보 DB저장
 			}

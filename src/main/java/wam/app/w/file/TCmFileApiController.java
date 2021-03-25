@@ -9,7 +9,6 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +27,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -46,6 +44,8 @@ public class TCmFileApiController {
 	
 	@Autowired
 	TCmFileRepository fileRepository;
+	@Autowired
+	CmFileUtils cmFileUtils;
 
 
 	@Operation(summary = "파일 목록 조회", description = "검색 값으로 페이징된 파일 목록 화면을 호출한다.")
@@ -116,7 +116,7 @@ public class TCmFileApiController {
 			return "201|fileSn parameter 누락";
 		
 		Integer fileSn = Integer.parseInt(param.get("fileSn").toString());
-		CmFileUtils.deleteFileOne(param.get("filePath").toString(), param.get("saveFileNm").toString());
+		cmFileUtils.deleteFileOne(param.get("filePath").toString(), param.get("saveFileNm").toString());
 		
 		fileRepository.deleteById(fileSn);
 		
@@ -133,7 +133,7 @@ public class TCmFileApiController {
 		int page = 1, perPage = 20;
 		PageRequest pageRequest = PageRequest.of(page - 1, perPage);
 		Page<TCmFile> list = fileRepository.findByTableNmAndTableId(tableNm, tableId, pageRequest);
-		CmFileUtils.deleteFiles(list.getContent());
+		cmFileUtils.deleteFiles(list.getContent());
 		
 		fileRepository.deleteByTableNmAndTableId(tableNm,tableId);
 		
@@ -160,7 +160,7 @@ public class TCmFileApiController {
 			resultFile =  cmfileOpt.get();
 			
 			String strName = new String(resultFile.getSaveFileNm().getBytes("UTF-8"), "ISO-8859-1");
-			String fullPath = CmFileUtils.getUploadPath() + resultFile.getFilePath() + File.separator + strName;
+			String fullPath = cmFileUtils.getUploadPath() + resultFile.getFilePath() + File.separator + strName;
 			//System.out.println("fullPath : " + fullPath);
 			File file = null;
 			//파일 열 때 경로상에 없을 경우 예외처리
@@ -194,7 +194,7 @@ public class TCmFileApiController {
   			String filePath = param.get("filePath");
   			String uploadFileNm = param.get("uploadFileNm");
   	  		String saveFileNm = param.get("saveFileNm");
-  	  		CmFileUtils.download( saveFileNm, uploadFileNm, filePath, request, response);
+  	  		cmFileUtils.download( saveFileNm, uploadFileNm, filePath, request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
