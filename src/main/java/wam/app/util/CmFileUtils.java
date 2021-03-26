@@ -1,9 +1,9 @@
 package wam.app.util;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,6 +19,8 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,6 +39,9 @@ import wam.app.w.file.TCmFile;
 
 @Component("cmFileUtils")
 public class CmFileUtils {
+
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+
 	@Value("${Globals.uploadPath}")
 	private String uploadPath;
 
@@ -125,7 +130,9 @@ public class CmFileUtils {
             //image = ImageIO.read(new File(fileName)); // filepath로 Image가져오기
         	byte[] b = mf.getBytes();
         	ByteArrayInputStream bufferedStream = new ByteArrayInputStream(b); // byte[]로 Image가져오기
-        	int orientation = getOrientation(bufferedStream);
+        	ByteArrayInputStream bi = new ByteArrayInputStream(b); // byte[]로 Image가져오기
+        	int orientation = getOrientation(bi);
+        	logger.debug("orientation : " + orientation);
         	image = ImageIO.read(bufferedStream);
  
             // 원본 이미지 사이즈 가져오기
@@ -157,6 +164,7 @@ public class CmFileUtils {
 	 
 	            // 새 이미지  저장하기
 	            BufferedImage newImage = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+	            newImage = rotateImageForMobile(newImage, orientation);
 	            Graphics g = newImage.getGraphics();
 	            g.drawImage(resizeImage, 0, 0, null);
 	            g.dispose();
@@ -173,11 +181,19 @@ public class CmFileUtils {
         }		
 	}
 	
-    public int getOrientation(BufferedInputStream is) throws IOException {
+	/**
+	 * 방향값(orientation) 가져오기
+	 * @param ByteArrayInputStream is
+	 * @return
+	 * @throws IOException
+	 */
+    public int getOrientation(ByteArrayInputStream is) throws IOException {
 	    int orientation = 1;
 	    try {
 		    Metadata metadata = ImageMetadataReader.readMetadata(is);
 		    //Directory directory = metadata.getDirectory(ExifIFD0Directory.class);
+		    Iterable<Directory> directorys = metadata.getDirectories();
+		    //logger.debug("directory count : " + directorys.);
 		    for (Directory directory0 : metadata.getDirectories()) {
 		    	try {
 		    		orientation = directory0.getInt(ExifIFD0Directory.TAG_ORIENTATION);
@@ -190,7 +206,52 @@ public class CmFileUtils {
 		}
 	    return orientation;
     }
-    
+
+    /**
+     * orientation에 따른 회전
+     * @param BufferedImage bi
+     * @param int orientation
+     * @return
+     * @throws IOException
+     */
+	public BufferedImage rotateImageForMobile(BufferedImage bi,int orientation) throws IOException {
+		//BufferedImage bi = ImageIO. read(is);
+		if(orientation == 6){ //정위치
+			return rotateImage(bi, 90);
+		} else if (orientation == 1){ //왼쪽으로 회전했을때
+			return bi;
+		} else if (orientation == 3){//오른쪽으로 회전했을때
+			return rotateImage(bi, 180);
+		} else if (orientation == 8){//180도
+			return rotateImage(bi, 270);      
+		} else{
+			return bi;
+		}       
+	}
+
+	/**
+	 * 각도에 따른 이미지회전
+	 * @param orgImage
+	 * @param angles
+	 * @return
+	 */
+	public BufferedImage rotateImage(BufferedImage orgImage,int angles) {
+		BufferedImage newImage;
+		if(angles==90 || angles==270){
+			newImage = new BufferedImage(orgImage.getHeight(),orgImage.getWidth(),orgImage.getType());
+		} else if (angles==180){
+			newImage = new BufferedImage(orgImage.getWidth(),orgImage.getHeight(),orgImage.getType());
+		} else{
+			return orgImage;
+		}
+		Graphics2D graphics = (Graphics2D) newImage.getGraphics();
+		graphics.rotate(Math. toRadians(angles), newImage.getWidth() / 2, newImage.getHeight() / 2);
+		graphics.translate((newImage.getWidth() - orgImage.getWidth()) / 2, (newImage.getHeight() - orgImage.getHeight()) / 2);
+		graphics.drawImage(orgImage, 0, 0, orgImage.getWidth(), orgImage.getHeight(), null );
+		
+		return newImage;
+	}
+
     /**
      * 파일 다운로드
      * @param request
