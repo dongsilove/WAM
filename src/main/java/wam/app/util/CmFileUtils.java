@@ -164,9 +164,9 @@ public class CmFileUtils {
 	 
 	            // 새 이미지  저장하기
 	            BufferedImage newImage = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
-	            newImage = rotateImageForMobile(newImage, orientation);
 	            Graphics g = newImage.getGraphics();
 	            g.drawImage(resizeImage, 0, 0, null);
+	            newImage = rotateImageForMobile(newImage, orientation);
 	            g.dispose();
 	            ImageIO.write(newImage, imgFormat, new File(fileName));
 	            
@@ -191,12 +191,12 @@ public class CmFileUtils {
 	    int orientation = 1;
 	    try {
 		    Metadata metadata = ImageMetadataReader.readMetadata(is);
-		    //Directory directory = metadata.getDirectory(ExifIFD0Directory.class);
 		    Iterable<Directory> directorys = metadata.getDirectories();
 		    //logger.debug("directory count : " + directorys.);
 		    for (Directory directory0 : metadata.getDirectories()) {
 		    	try {
-		    		orientation = directory0.getInt(ExifIFD0Directory.TAG_ORIENTATION);
+		    		if (directory0.containsTag(ExifIFD0Directory.TAG_ORIENTATION))
+		    			orientation = directory0.getInt(ExifIFD0Directory.TAG_ORIENTATION);
 		    	} catch (MetadataException e) {
 		    		e.printStackTrace();
 		    	}
