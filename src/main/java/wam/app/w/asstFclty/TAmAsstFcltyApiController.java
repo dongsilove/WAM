@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -71,8 +72,10 @@ public class TAmAsstFcltyApiController {
 	
 	@Operation(summary = "자산 저장", description = "자산 저장한다.")
 	@RequestMapping(value="/asstfcltys", method=RequestMethod.PUT, consumes= {"multipart/form-data"})
-	public TAmAsstFclty put(TAmAsstFclty tAmAsstFclty, HttpServletRequest request)  throws Exception  {
-		
+	public TAmAsstFclty put(@Valid TAmAsstFclty tAmAsstFclty, HttpServletRequest request, Errors errors)  throws Exception  {
+		if (errors.hasErrors()) {
+			log.debug("자산 저장 오류: " + errors.getErrorCount());
+		}
 		log.debug("자산 저장 호출 : {}", tAmAsstFclty);
 		TAmAsstFclty asst;
 		asst = asstRepository.save(tAmAsstFclty);

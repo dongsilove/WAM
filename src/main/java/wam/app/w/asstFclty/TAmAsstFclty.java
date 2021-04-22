@@ -11,10 +11,11 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import wam.app.common.CommonTbl;
 
 
@@ -23,7 +24,7 @@ import wam.app.common.CommonTbl;
  * 
  */
 @Entity
-@Getter @Setter
+@Data
 @Table(name="t_am_asst_fclty")
 @NamedQuery(name="TAmAsstFclty.findAll", query="SELECT t FROM TAmAsstFclty t")
 public class TAmAsstFclty extends CommonTbl implements Serializable {
@@ -40,6 +41,7 @@ public class TAmAsstFclty extends CommonTbl implements Serializable {
 	@Schema(description ="자산확인여부" )
 	private String asstCnfirmYn;
 
+	
 	@Column(name="asst_nm")
 	@Schema(description ="자산명" )
 	private String asstNm;
@@ -71,7 +73,10 @@ public class TAmAsstFclty extends CommonTbl implements Serializable {
 	@Schema(description ="대분류명" )
 	private String lclasNm;
 
+	@NotNull
+	@Size(min=6, message="at least 6 characters long")
 	@Column(name="locplc_nm")
+	@Schema(description ="설치위치(소재지)" )
 	private String locplcNm;
 
 	@Column(name="makr_nm")
@@ -161,6 +166,7 @@ public class TAmAsstFclty extends CommonTbl implements Serializable {
 	private BigDecimal yrDprtAm;
 
 	public TAmAsstFclty() {
+		super();
 	}
 
 
