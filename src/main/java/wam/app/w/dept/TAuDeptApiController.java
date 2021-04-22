@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@Tag( name = "TAuUserApiController", description = "코드")
+@Tag( name = "TAuDeptApiController", description = "부서")
 @RestController 
 @RequestMapping(value="/api")
 public class TAuDeptApiController {
