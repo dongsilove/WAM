@@ -33,6 +33,10 @@ public class TCmMenu implements Serializable {
 	@Schema(description ="상위메뉴아이디" )
 	private String upperMenuId;
 	
+	@Column(name="menu_icon_nm")
+	@Schema(description ="메뉴아이콘명" )
+	private String menuIconNm;
+	
 
 	public TCmMenu() {
 	}

@@ -97,6 +97,7 @@ public class TAmAsstFcltyApiController {
 		
 	}
 	
+	
 	@Operation(summary = "자산 삭제", description = "자산 삭제한다.")
 	@DeleteMapping("/asstfcltys/{asstSn}")
 	public String delete(@PathVariable Integer asstSn) throws Exception {
@@ -104,7 +105,13 @@ public class TAmAsstFcltyApiController {
 		if (asstSn == null || asstSn < 1) return "201"; // 자산 일련번호 오류
 
 		// 자산 삭제
-		asstRepository.deleteById(asstSn);
+		//asstRepository.deleteById(asstSn);
+		Optional<TAmAsstFclty> asstOpt = asstRepository.findById(asstSn);
+		if (asstOpt.isPresent()) {
+			TAmAsstFclty asstFclty = asstOpt.get();
+			asstFclty.setUseYn("N");
+			asstRepository.save(asstFclty);
+		}
 		
 		return "200";
 		

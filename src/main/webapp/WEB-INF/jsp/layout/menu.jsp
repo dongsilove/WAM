@@ -21,10 +21,12 @@
                         <li><a href="/cdgrp/page"><i class="fas fa-copyright"></i>코드그룹</a></li>
                     </ul>
                 </li>
-                <li><a href="#">사용자</a>
+                <li><a href="#">시스템</a>
                     <ul class="depth">
-                        <li><a href="/user/page"><i class="fas fa-user"></i>직원정보</a></li>
+                        <li><a href="/user/page"><i class="fas fa-user"></i>사용자정보</a></li>
                         <li><a href="/dept/page"><i class="fas fa-address-book"></i>부서정보</a></li>
+                        <li><a href="/usergrp/page"><i class="far fa-id-badge"></i>사용자그룹정보</a></li>
+                        <li><a href="/menu/page"><i class="fas fa-bars"></i>메뉴정보</a></li>
                     </ul>
                 </li>
             </ul>

@@ -593,7 +593,7 @@ input#back_img{width:100%}
     .wrap._hide{margin-left:0;margin:0 auto;}
     .btn_bars{cursor:pointer;display:block;position:absolute;top:16px;left:22px;color:#fff;font-size:22px;}
     .header{height:56px;
-        background-image:url('../images/pattern.svg'),linear-gradient(to right, #126CFA 0, #108AEC 100%); 
+        /*background-image:url('../images/pattern.svg'),linear-gradient(to right, #126CFA 0, #108AEC 100%);  */
         background-position:right center,center center;
         background-repeat:no-repeat
     }

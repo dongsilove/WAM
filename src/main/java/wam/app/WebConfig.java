@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import wam.app.common.LoginCheckInterceptor;
@@ -36,5 +37,13 @@ public class WebConfig implements WebMvcConfigurer {
 	@Bean
 	public AuditorAware<String> auditorProvider() {
 		return new AuditorAwareImpl();
+	}
+	
+	/*
+	 * viewController 설정 (page이동만 있는 경우)
+	 */
+	public void addViewControllers(ViewControllerRegistry registry) {
+		registry.addViewController("/menu/page").setViewName("menu");
+		registry.addViewController("/usergrp/page").setViewName("usergrp");
 	}
 }

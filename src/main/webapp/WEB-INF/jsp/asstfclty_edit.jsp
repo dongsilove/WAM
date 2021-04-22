@@ -33,7 +33,7 @@ var mode = 'edit';
 						<a href="#" onclick="detailForm.reset();">신규</a>
 						<a href="#" onclick="$('#detailForm').submit();">저장</a>
 						<a href="#" onclick="_list.goList();">목록</a>
-						<!-- <a href="#" onclick="_list.deleteOne();">삭제</a> -->
+						<a href="#" onclick="_list.deleteOne();">삭제</a>
 					</div> 
 				</div>
                 <div class="user_form task_list_wrap">

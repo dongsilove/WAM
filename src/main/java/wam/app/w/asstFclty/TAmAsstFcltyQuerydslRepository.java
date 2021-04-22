@@ -83,6 +83,8 @@ public class TAmAsstFcltyQuerydslRepository extends QuerydslRepositorySupport {
 			booleanBuilder.and( tAmAsstFclty.modifyId.contains(param.get("modifyId").toString()) );
 		}
 
+		booleanBuilder.and( tAmAsstFclty.useYn.eq("Y") );
+		
 		query = query.where(booleanBuilder).orderBy(tAmAsstFclty.asstSn.desc());
 		final List<TAmAsstFclty> result = getQuerydsl().applyPagination(pageable, query).fetch();
 		return new PageImpl<>(result, pageable, query.fetchCount());
