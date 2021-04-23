@@ -39,9 +39,9 @@ public class TAuUserGrpApiController {
 			@RequestParam(name = "page", required = true, defaultValue = "1") int page) throws Exception {
 		Page<TAuUserGrp> list;
 		param.forEach((k,v)->logger.debug("key:" + k + "\tvalue:" +v));
-		PageRequest pageRequest = PageRequest.of(page - 1, perPage, Sort.by(Direction.ASC, "grpCd"));
-		if(param.get("grpNm") != null && !param.get("grpNm").toString().equals("")) {
-			list = (Page<TAuUserGrp>) deptRepository.findByGrpNmContaining(param.get("grpNm").toString(),pageRequest);
+		PageRequest pageRequest = PageRequest.of(page - 1, perPage, Sort.by(Direction.ASC, "usergrpCd"));
+		if(param.get("usergrpNm") != null && !param.get("usergrpNm").toString().equals("")) {
+			list = (Page<TAuUserGrp>) deptRepository.findByUsergrpNmContaining(param.get("usergrpNm").toString(),pageRequest);
 		} else {
 			list = (Page<TAuUserGrp>) deptRepository.findAll(PageRequest.of(page - 1, perPage));
 		}
@@ -49,10 +49,10 @@ public class TAuUserGrpApiController {
 	}
 	
 	@Operation(summary = "사용자그룹 조회", description = "단건 조회한다.")
-	@GetMapping("/usergrps/{grpCd}")
-	public Optional<TAuUserGrp> get( @PathVariable String grpCd ) throws Exception {
+	@GetMapping("/usergrps/{usergrpCd}")
+	public Optional<TAuUserGrp> get( @PathVariable String usergrpCd ) throws Exception {
 
-		Optional<TAuUserGrp> dept = deptRepository.findById(grpCd);
+		Optional<TAuUserGrp> dept = deptRepository.findById(usergrpCd);
 		
 		return dept;
 		
@@ -73,11 +73,11 @@ public class TAuUserGrpApiController {
 	}
 	
 	@Operation(summary = "사용자그룹 삭제", description = "사용자그룹 삭제한다.")
-	@DeleteMapping("/usergrps/{grpCd}")
-	public String delete(@PathVariable String grpCd) throws Exception {
+	@DeleteMapping("/usergrps/{usergrpCd}")
+	public String delete(@PathVariable String usergrpCd) throws Exception {
 		
-		logger.debug("사용자그룹 삭제 호출 : grpCd-"+  grpCd);
-		deptRepository.deleteById(grpCd);
+		logger.debug("사용자그룹 삭제 호출 : usergrpCd-"+  usergrpCd);
+		deptRepository.deleteById(usergrpCd);
 		return "200";
 		
 	}

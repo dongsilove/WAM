@@ -1,26 +1,31 @@
 /**
- * @FileName 	usergrp.js
+ * @FileName 	author.js
  * @author 		ljpark
  * @Date 		2021.02.11
- * @Description 사용자그룹
+ * @Description 권한
  * @History
  * DATE			AUTHOR		NOTE	
  * -------------------------------------------------
  * 2021.02.11	ljpark		신규
  */
+var deptList; // 사용자그룹
 $(function() {
 	
-	_list.paginationInit();
-	_list.getList(1);
+	// 상위부서 selectBox setting
+	_commUtils.getSelectBox('/api/depts', $(".deptNm"),'deptNm','deptCd').done(function(r){
+		deptList = r;
+		_list.paginationInit();
+		_list.getList(1);
+	});
 	
 	// 영문 대문자처리
-	$('#usergrpCd').on('blur', function(){ $(this).val($(this).val().toUpperCase())});
+	$('#deptCd').on('blur', function(){ $(this).val($(this).val().toUpperCase())});
 	
 	// 저장 click시 호출
 	$("#detailForm").validate({
 	
 		submitHandler : function () { //validation이 끝난 이후의 submit 직전 추가 작업할 부분
- 			_ajaxUtils.ajax({"url" : "/api/usergrps/", "method": "PUT", "form" : $("#detailForm")
+ 			_ajaxUtils.ajax({"url" : "/api/depts/", "method": "PUT", "form" : $("#detailForm")
 				,"successCallback": function(result) {
 					_list.getList();
 					detailForm.reset();
@@ -28,8 +33,9 @@ $(function() {
 			});
 		}
 		, rules: { //규칙 - id 값으로 
-			  usergrpCd       	: {maxlength:5, required:true} 								
-			, usergrpNm     	: {maxByteLength:200, required:true} 			    
+			  deptCd       	: {maxlength:5, required:true} 								
+			, deptNm     	: {maxByteLength:200, required:true} 			    
+			, upperDeptCd   : {maxlength:5}			    
 		}
 	});
 	
@@ -48,28 +54,29 @@ var _list = {
 		$("#searchtmp").attr("value",$("#searchValue").val().toUpperCase());
 		$("#page").val(page);
 		
-		_ajaxUtils.ajax({"url" : "/api/usergrps", "form" : $("#searchForm")
-			,"successCallback": function(data) { console.log(data);
+		_ajaxUtils.ajax({"url" : "/api/depts", "form" : $("#searchForm")
+			,"successCallback": function(data) { //console.log(data);
 				$("#listData").html(""); // 목록 초기화
 				data.content.forEach(function(f){
 					processNull(f);
-					$("#listData").append("<tr onclick=\"_list.getDetail('"+ f.usergrpCd +"')\">"
-						+"<td>" +f.usergrpCd+"</td><td>"+f.usergrpNm
+					let upperDeptNm = (deptList&&f.upperDeptCd)? deptList[f.upperDeptCd] :"";
+					$("#listData").append("<tr onclick=\"_list.getDetail('"+ f.deptCd +"')\">"
+						+"<td>" +f.deptCd+"</td><td>"+f.deptNm
+						+"</td><td>"+upperDeptNm
 						+"</td></tr>"
 					);
 				});
 				if (data.numberOfElements == 0) {
 					$("#listData").append("<tr><td colspan=9>조회결과가 없습니다.</td></tr>");
 				}
-				console.log(data.totalElements);
 				_list.pagination.setTotalItems(data.totalElements); // 총레코드 수
 				_list.pagination._paginate(page); // 조회 page
 			}
 		});
 	} // getList()
-	,getDetail : function(usergrpCd) {
+	,getDetail : function(deptCd) {
 		mode="PUT"; // 수정모드
-		_ajaxUtils.ajax({"url" : "/api/usergrps/"+usergrpCd
+		_ajaxUtils.ajax({"url" : "/api/depts/"+deptCd
 			,"successCallback": function(data) { console.log(data);
 				for(key in data) {	
 					_commUtils.setVal("detailForm", key, data[key] );
@@ -78,12 +85,12 @@ var _list = {
 		});
 	}
 	,deleteOne : function() {
-		let pk = $("#usergrpCd").val();
+		let pk = $("#deptCd").val();
 		//console.log("삭제 호출" + pk);
 		if (isEmpty(pk)) {alert('삭제할 데이터를 선택하세요.'); return;}
 		if(confirm("삭제하시겠습니까? 삭제 후에는 복구가 불가능 합니다."))
 		{
-			_ajaxUtils.ajax({"url" : "/api/usergrps/"+pk, "method": "DELETE"
+			_ajaxUtils.ajax({"url" : "/api/depts/"+pk, "method": "DELETE"
 				,"successCallback": function(result) { console.log(result);
 					alert("삭제되었습니다.");
 					_list.getList();

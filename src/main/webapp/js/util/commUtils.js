@@ -23,6 +23,18 @@ function isEmpty(str){
 }
 
 /**
+ * str이 undefined이거나 null이면 ""반환,  defaultValue값이 있다면 defaultValue반환
+ * @param String str
+ * @param String defaultValue
+ * @returns 
+ */
+function nvl(str, defaultValue) {
+	if(typeof str == "undefined" || str == null) {
+		//return (!isEmpty(defaultValue))? defaultValue: "";
+		return "";
+	}
+}
+/**
  * DB에서 조회된 자료 화면에 보여주기 전 호출
  * Object(json)에  null을  확인 후 ""으로 변경
  * key값에 Ymd를 포함하고 있다면 날짜구분자 '-' 추가
@@ -173,7 +185,7 @@ var _commUtils = {
 					$(item).append("<option value=''>선택</option>");
 					returnVal = [];
 					for (var i=0; i<list.length; i++) {
-						var text = list[i][textNm];
+						var text = (isEmpty(list[i][textNm]))? "" : list[i][textNm];
 						var value = list[i][valueNm];
 						var option = "<option value='"+value+"'>"+text+"</option>";
 						$(item).append(option);

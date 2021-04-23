@@ -15,7 +15,7 @@
     <div class="bg"></div>
     <div class="wrap">
         <jsp:include page="/WEB-INF/jsp/layout/top.jsp"/>
-        <jsp:include page="/WEB-INF/jsp/layout/menu.jsp"/>
+        <jsp:include page="/WEB-INF/jsp/layout/nav.jsp"/>
 
         <div class="container">
             <div class="title">

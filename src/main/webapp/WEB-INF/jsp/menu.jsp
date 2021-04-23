@@ -16,7 +16,7 @@
     <div class="bg"></div>
     <div class="wrap">
         <jsp:include page="/WEB-INF/jsp/layout/top.jsp"/>
-        <jsp:include page="/WEB-INF/jsp/layout/menu.jsp"/>
+        <jsp:include page="/WEB-INF/jsp/layout/nav.jsp"/>
 
         <div class="container">
             <div class="title">
@@ -51,7 +51,6 @@
 		                    <colgroup>
 		                        <col style="width:20%">
 		                        <col style="width:auto">
-		                        <col style="width:20%">
 		                        <col style="width:20%">
 		                    </colgroup>
 		                    <thead>
@@ -105,6 +104,10 @@
 	                        <tr>
 	                            <th class="required"><label for="menuIconNm">메뉴아이콘명</label></th>
 	                            <td><input type="text" name="menuIconNm" id="menuIconNm"  value="" ></td>
+	                        </tr>
+	                        <tr>
+	                            <th class="required"><label for="menuUrl">메뉴URL</label></th>
+	                            <td><input type="text" name="menuUrl" id="menuUrl"  value="" ></td>
 	                        </tr>
 
 	                        </tbody>

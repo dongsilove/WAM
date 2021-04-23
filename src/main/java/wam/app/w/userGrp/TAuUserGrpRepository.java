@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface TAuUserGrpRepository extends JpaRepository<TAuUserGrp, String> {
 
 	
-	Page<TAuUserGrp> findByGrpNmContaining(String searchValue, Pageable pageable);
+	Page<TAuUserGrp> findByUsergrpNmContaining(String searchValue, Pageable pageable);
 	
 	
 }

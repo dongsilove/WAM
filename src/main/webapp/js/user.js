@@ -11,6 +11,7 @@
 var clsfList; // 직급코드 배열
 var prjctList; // 프로젝트 배열
 var deptList; // 부서 배열
+var usergrpList; // 부서 배열
 var mode = "";
 $(function() {
 	_datepicker.dateInit();
@@ -25,6 +26,11 @@ $(function() {
 	// 부서 selectBox setting
 	_commUtils.getSelectBox('/api/depts', $(".deptNm"),'deptNm','deptCd').done(function(r){
 		deptList = r;
+	}); 
+	// 사용자그룹 selectBox setting
+	_commUtils.getSelectBox('/api/usergrps', $(".usergrpNm"),'usergrpNm','usergrpCd').done(function(r){
+		usergrpList = r;
+		console.log(usergrpList);
 		_list.paginationInit();
 		_list.getList(1);
 	}); 
@@ -71,11 +77,14 @@ var _list = {
 				$("#listData").html(""); // 목록 초기화
 				data.content.forEach(function(f){
 					processNull(f); // null처리, 날짜형식 처리 (_commUtils.js)
-					let clsfNm = (clsfList&&f.clsfCd)? clsfList[f.clsfCd] :"";
+					
+					let clsfNm = (clsfList&&f.clsfCd)? clsfList[f.clsfCd] :""; // 직급코드
+					let usergrpNm = (usergrpList&&f.usergrpCd)? usergrpList[f.usergrpCd]:""; // 사용자그룹
 					$("#listData").append("<tr onclick=\"_list.getDetail('"+ f.userId +"')\">"
 						+"<td>" +f.userId+"</td><td>"+f.userNm
 						+"</td><td>"+clsfNm+"</td><td>"+f.ecnyYmd
 						+"</td><td>"+deptList[f.deptCd]
+						+"</td><td>"+ usergrpNm
 						+"</td></tr>"
 					);
 				});

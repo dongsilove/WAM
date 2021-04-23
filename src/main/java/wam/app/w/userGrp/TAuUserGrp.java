@@ -11,7 +11,6 @@ import lombok.Setter;
 
 /**
  * 사용자 그룹
- * 
  */
 @Entity
 @Getter @Setter
@@ -21,13 +20,13 @@ public class TAuUserGrp implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="grp_cd")
+	@Column(name="usergrp_cd")
 	@Schema(description ="사용자그룹코드" )
-	private String grpCd;
+	private String usergrpCd;
 
-	@Column(name="grp_nm")
+	@Column(name="usergrp_nm")
 	@Schema(description ="사용자그룹명" )
-	private String grpNm;
+	private String usergrpNm;
 
 	@Column(name="author_cn")
 	@Schema(description ="권한내용" )
@@ -37,7 +36,7 @@ public class TAuUserGrp implements Serializable {
 	}
 	
 	public String toString() {
-		return "grpCd : " + this.grpCd + "\ngrpNm : " + this.grpNm;
+		return "usergrpCd - " + this.usergrpCd + "\tusergrpNm : " + this.usergrpNm;
 	}
 
 

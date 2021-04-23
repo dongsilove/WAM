@@ -16,7 +16,7 @@
     <div class="bg"></div>
     <div class="wrap">
         <jsp:include page="/WEB-INF/jsp/layout/top.jsp"/>
-        <jsp:include page="/WEB-INF/jsp/layout/menu.jsp"/>
+        <jsp:include page="/WEB-INF/jsp/layout/nav.jsp"/>
 
         <div class="container">
             <div class="title">
@@ -34,7 +34,7 @@
 								
 								<select name="searchName" id="searchName"   >
 										<!-- <option value=''> -- 검색선택 -- </option> -->
-										<option value="grpNm" >사용자그룹명</option>
+										<option value="usergrpNm" >사용자그룹명</option>
 								</select>
 								<input type="text" name="searchValue" id="searchValue" value="" 
 									placeholder="검색할 내용을 입력해주세요"  
@@ -86,12 +86,12 @@
 	                        </colgroup>
 	                        <tbody>
 	                        <tr>
-	                            <th class="required"><label for="grpCd">사용자그룹코드</label></th>
-	                            <td><input type="text" name="grpCd" id="grpCd"  value="" ></td>
+	                            <th class="required"><label for="usergrpCd">사용자그룹코드</label></th>
+	                            <td><input type="text" name="usergrpCd" id="usergrpCd"  value="" ></td>
 	                        </tr>
 	                        <tr>
-	                            <th class="required"><label for="grpNm">사용자그룹명</label></th>
-	                            <td><input type="text" name="grpNm" id="grpNm"  value="" ></td>
+	                            <th class="required"><label for="usergrpNm">사용자그룹명</label></th>
+	                            <td><input type="text" name="usergrpNm" id="usergrpNm"  value="" ></td>
 	                        </tr>
 	                        
 	                        </tbody>

@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -92,12 +91,12 @@ public class LoginApiController {
 		if(optUser.isPresent()) {
 			TAuUser rsltUser = optUser.get();
 			String resultPwd = rsltUser.getPwd();
-			String resultSalt = rsltUser.getPwdSalt();
+			String resultSalt = rsltUser.getPwdSalt(); 
 			String encryptPwd = CryptoUtil.encryptSHA256salt(pwd,resultSalt); // parameter pwd암호화
 			if (resultPwd.equals(encryptPwd)) { // DB의 비밀번호와 암호화비밀번호가 일치하면 
 				
 				session.setAttribute("loginId", userId); // session timeout 점검용
-				session.setAttribute("loginDeptNm", rsltUser.gettAuDept().getDeptNm()); // 부서명
+				session.setAttribute("loginDeptNm", rsltUser.getTAuDept().getDeptNm()); // 부서명
 				
 				session.setAttribute("loginInfo", rsltUser);
 				

@@ -16,7 +16,7 @@
     <div class="bg"></div>
     <div class="wrap">
         <jsp:include page="/WEB-INF/jsp/layout/top.jsp"/>
-        <jsp:include page="/WEB-INF/jsp/layout/menu.jsp"/>
+        <jsp:include page="/WEB-INF/jsp/layout/nav.jsp"/>
 
         <div class="container">
             <div class="title">
@@ -58,10 +58,12 @@
 		                <div class="task_list">
 		                <table id="list_t">
 		                    <colgroup>
-		                        <col style="width:20%">
+		                        <col style="width:15%">
 		                        <col style="width:auto">
-		                        <col style="width:20%">
-		                        <col style="width:20%">
+		                        <col style="width:15%">
+		                        <col style="width:15%">
+		                        <col style="width:15%">
+		                        <col style="width:15%">
 		                    </colgroup>
 		                    <thead>
 		                        <tr>
@@ -70,6 +72,7 @@
 		                            <th scope="col">직급</th>
 		                            <th scope="col">입사일</th>
 		                            <th scope="col">소속부서</th>
+		                            <th scope="col">사용자그룹</th>
 		                        </tr>
 		                    </thead>
 		                    <tbody id="listData">
@@ -136,6 +139,12 @@
 	                            <th class="required"><label for="prjctSn">담당프로젝트</label></th>
 	                            <td>
 	                                <select name="prjctSn" class="prjctNm"></select>
+	                            </td>
+	                        </tr>
+	                        <tr>
+	                            <th class="required"><label for="usergrpCd">사용자그룹</label></th>
+	                            <td>
+	                                <select name="usergrpCd" class="usergrpNm"></select>
 	                            </td>
 	                        </tr>
 

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>마인드원</title>
+    <link rel="shortcut icon" href="/images/favicon_mindone.ico">
     <link href="/asset/fontawesome/css/fontawesome-all.css" rel="stylesheet">
     <script src="/js/lib/jquery/jquery-3.4.1.min.js"></script>
     <script src="/js/util/init2.js"></script>
@@ -30,11 +31,12 @@
     <script src="/js/util/datepickerUtils.js"></script>
     <script src="/js/util/cmFile.js"></script><!-- 첨부파일 -->
 
-	<script>
+<script>
 	var loginId = '${loginInfo.userId}';
 	var loginDeptNm = '${loginDeptNm}';
-	var loginDeptNm = '${loginInfo.tAuDept.deptNm}';
-	var loginPrjctSn = '${loginInfo.tCmPrjct.prjctSn}';
+	//var loginDeptNm = '${loginInfo.TAuDept.deptNm}';
+	//var loginPrjctSn = '${loginInfo.TCmPrjct.prjctSn}';
 	//console.log("deptNm : " + deptNm);
-	</script>
+	console.log('${loginInfo}');
+</script>
 </head>
