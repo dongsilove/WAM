@@ -8,38 +8,125 @@
  * -------------------------------------------------
  * 2021.02.11	ljpark		신규
  */
-var deptList; // 사용자그룹
+var gMenuId = 'AUTHOR';
+var auth;
+var ugrpCd;
+// 검색
+var getMenuAuthList = function() {
+	if ( isEmpty($("#usergrpNm").val()) ) {
+		alert("사용자그룹을 선택해 주세요."); return;
+	}
+	_list.getList(1); // 메뉴목록 & 권한정보 입히기
+}
+
+//메뉴 목록에 권한 정보 입히기
+var getAuth = function() {
+	//console.log(auth);
+	for(key in auth) {
+		//console.log(key + " : " +auth[key]);
+		if(auth[key].indexOf('M') > -1) $("input:checkbox[name='" + key + "']:checkbox[value='M']").prop("checked", true);
+		if(auth[key].indexOf('C') > -1) $("input:checkbox[name='" + key + "']:checkbox[value='C']").prop("checked", true);
+		if(auth[key].indexOf('U') > -1) $("input:checkbox[name='" + key + "']:checkbox[value='U']").prop("checked", true);
+		if(auth[key].indexOf('D') > -1) $("input:checkbox[name='" + key + "']:checkbox[value='D']").prop("checked", true);
+		if(auth[key].indexOf('R') > -1) $("input:checkbox[name='" + key + "']:checkbox[value='R']").prop("checked", true);
+		if(auth[key].indexOf('E') > -1) $("input:checkbox[name='" + key + "']:checkbox[value='E']").prop("checked", true);
+	}
+}
+// 사용자그룹선택시 호출
+var chgUsergrp = function(usergrpCd) {
+	//console.log(_usrgrp.usrgrps);
+	(_usrgrp.usrgrps).forEach(function(row){
+		//console.log(row.ugrpCde);
+		if (row.usergrpCd == usergrpCd) { // select 선택값과 사용자그룹목록키가 같다면
+			$("#usergrpCd").val(row.usergrpCd);
+			$("#usergrpNm").val(row.usergrpNm);
+			//console.log(row);
+			auth = JSON.parse(row.authorCn);
+		}
+	});
+	
+}
+//사용자그룹목록
+var _usrgrp = {
+	usrgrps : []
+	, list :	function() {
+
+		_ajaxUtils.ajax({"url" : "/api/usergrps", "form" : $("#searchForm")
+			,"successCallback": function(data) { //console.log(result);
+				var objs = $(".ugrpCd"); 
+				_usrgrp.usrgrps = data.content; //console.log(_usrgrp.usrgrps);
+				var dataT = data.content;
+				$.each(objs, function(index, item) {
+					//console.log(item);
+					$(item).find("option").remove();
+					$(item).append("<option value=''>선택</option>");
+					for (var i=0; i<dataT.length; i++) {
+						var option = "<option value='"+dataT[i].usergrpCd+"'>"+dataT[i].usergrpNm+"</option>";
+						$(item).append(option);
+					}
+				});
+			}
+		});
+	}
+}
+
+var checkAll = function(opt) {
+	if ($("input:checkbox[id='"+opt+"all']").is(":checked") == true)
+		$("input:checkbox[value='"+opt+"']").prop("checked", true);
+	else
+		$("input:checkbox[value='"+opt+"']").prop("checked", false);
+}
+
 $(function() {
 	
 	// 상위부서 selectBox setting
-	_commUtils.getSelectBox('/api/depts', $(".deptNm"),'deptNm','deptCd').done(function(r){
-		deptList = r;
+	/*_commUtils.getSelectBox('/api/usergrps', $(".usergrpNm"),'usergrpNm','usergrpCd').done(function(r){
+		usergrpList = r;
 		_list.paginationInit();
 		_list.getList(1);
-	});
-	
-	// 영문 대문자처리
-	$('#deptCd').on('blur', function(){ $(this).val($(this).val().toUpperCase())});
+	});*/
+	_usrgrp.list(); // 사용자그룹 조회
+	_list.getList(1); // 메뉴 조회
 	
 	// 저장 click시 호출
 	$("#detailForm").validate({
 	
 		submitHandler : function () { //validation이 끝난 이후의 submit 직전 추가 작업할 부분
- 			_ajaxUtils.ajax({"url" : "/api/depts/", "method": "PUT", "form" : $("#detailForm")
+			if ( isEmpty($("#usergrpNm").val()) ) {
+				alert("사용자그룹을 선택해 주세요."); return;
+			}
+	 		var arr = $("#detailForm").serializeArray(); //console.log(arr); // [{"name":"SWLPIPE", "value":"M"},{"name":"SWLPIPE", "value":"C"}]
+			var obj = {}; 
+			if(arr){ 
+				jQuery.each(arr, function() { 
+					if (obj[this.name]) { 
+						obj[this.name] += this.value;  // obj = {"SWLPIPE":"MCUDRE"} 형태로 만들기
+					}
+					else {
+						obj[this.name] = this.value; 
+					}
+				}); 
+			} 	
+			ugrpCd = $("#usergrpCd").val();
+	        $("#usergrpCd").val($("#usergrpCd").val());
+	        $("#authorCn").val(JSON.stringify(obj));
+			_ajaxUtils.ajax({"url" : "/api/usergrps/", "method": "PUT", "form" : $("#authForm")
 				,"successCallback": function(result) {
-					_list.getList();
 					detailForm.reset();
+					_usrgrp.list();
+					_list.getList();
 				}
 			});
 		}
 		, rules: { //규칙 - id 값으로 
-			  deptCd       	: {maxlength:5, required:true} 								
-			, deptNm     	: {maxByteLength:200, required:true} 			    
-			, upperDeptCd   : {maxlength:5}			    
+			  usergrpCd       	: {maxlength:5, required:true} 								
+			, usergrpNm     	: {maxByteLength:200, required:true} 			    
+			, authorCn   : {maxlength:1000}			    
 		}
 	});
 	
 });
+
 
 var _list = {
 	pagination : {}
@@ -50,27 +137,33 @@ var _list = {
 	}
 	,getList : function(page) {
 		if (isEmpty(page)) page = 1;
-		$("#searchtmp").attr("name",$("#searchName option:selected").val());
+		/*$("#searchtmp").attr("name",$("#searchName option:selected").val());
 		$("#searchtmp").attr("value",$("#searchValue").val().toUpperCase());
-		$("#page").val(page);
+		$("#page").val(page);*/
 		
-		_ajaxUtils.ajax({"url" : "/api/depts", "form" : $("#searchForm")
-			,"successCallback": function(data) { //console.log(data);
+		_ajaxUtils.ajax({"url" : "/api/menus/listConnectBy", "form" : $("#searchForm")
+			,"successCallback": function(data) { console.log(data);
 				$("#listData").html(""); // 목록 초기화
-				data.content.forEach(function(f){
-					processNull(f);
-					let upperDeptNm = (deptList&&f.upperDeptCd)? deptList[f.upperDeptCd] :"";
-					$("#listData").append("<tr onclick=\"_list.getDetail('"+ f.deptCd +"')\">"
-						+"<td>" +f.deptCd+"</td><td>"+f.deptNm
-						+"</td><td>"+upperDeptNm
-						+"</td></tr>"
-					);
+				data.content.forEach(function(f, idx) { //console.log(i);
+					var space = "&nbsp;&nbsp;"
+					for(var i=0;i<f.depthNum;i++) space += space;
+					var rowdata = '<tr>'
+						+'<td  class="ta_l">'+space +f.menuId+'</td><td>'+f.menuNm+'</td><td>'+f.upperMenuId+'</td>';
+						rowdata += '<td><input type="checkbox" name="'+f.menuId+'" value="M"><label>메뉴사용</label></td>'  
+						+'<td><input type="checkbox" name="'+f.menuId+'" value="C"><label>등록</label></td>'  
+						+'<td><input type="checkbox" name="'+f.menuId+'" value="U"><label>수정</label></td>'  
+						+'<td><input type="checkbox" name="'+f.menuId+'" value="D"><label>삭제</label></td>'  
+						+'<td><input type="checkbox" name="'+f.menuId+'" value="R"><label>조회</label></td>'  
+						+'<td><input type="checkbox" name="'+f.menuId+'" value="E"><label>엑셀다운</label></td>';
+					rowdata +='</tr>';
+					$('#listData').append(rowdata);
 				});
-				if (data.numberOfElements == 0) {
+				
+				if ($("#ugrpCd").val()) getAuth(); // 사용자그룹을 선택했다면 권한정보까지 보여준다.
+				
+				/*if (data.content.length == 0) {
 					$("#listData").append("<tr><td colspan=9>조회결과가 없습니다.</td></tr>");
-				}
-				_list.pagination.setTotalItems(data.totalElements); // 총레코드 수
-				_list.pagination._paginate(page); // 조회 page
+				}*/
 			}
 		});
 	} // getList()
@@ -83,21 +176,6 @@ var _list = {
 				}
 			}
 		});
-	}
-	,deleteOne : function() {
-		let pk = $("#deptCd").val();
-		//console.log("삭제 호출" + pk);
-		if (isEmpty(pk)) {alert('삭제할 데이터를 선택하세요.'); return;}
-		if(confirm("삭제하시겠습니까? 삭제 후에는 복구가 불가능 합니다."))
-		{
-			_ajaxUtils.ajax({"url" : "/api/depts/"+pk, "method": "DELETE"
-				,"successCallback": function(result) { console.log(result);
-					alert("삭제되었습니다.");
-					_list.getList();
-					detailForm.reset();
-				}
-			});	
-		}
 	}
 
 } // _list

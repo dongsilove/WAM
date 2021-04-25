@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>마인드원</title>
+    <link rel="shortcut icon" href="/images/favicon_mindone.ico">
     <link href="/asset/fontawesome/css/fontawesome-all.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
     <script src="/js/lib/jquery/jquery-3.4.1.min.js"></script>
@@ -34,7 +35,7 @@
         -moz-background-size: cover;
         -o-background-size: cover;
         background-size: cover;
-        }
+    }
 </style>
 <body>
     <div class="wrap">

@@ -8,6 +8,7 @@
  * -------------------------------------------------
  * 2021.02.11	ljpark		신규
  */
+var gMenuId = 'CM_MENU';
 var menuList; // 메뉴 배열(상위메뉴용)
 $(function() {
 	
@@ -64,6 +65,8 @@ var _list = {
 					$("#listData").append("<tr onclick=\"_list.getDetail('"+ f.menuId +"')\">"
 						+"<td>" +f.menuId+"</td><td>"+f.menuNm
 						+"</td><td>"+f.upperMenuId
+						+"</td><td>"+f.menuIconNm
+						+"</td><td>"+f.menuUrl
 						+"</td></tr>"
 					);
 				});

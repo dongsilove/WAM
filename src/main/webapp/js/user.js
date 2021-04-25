@@ -8,6 +8,8 @@
  * -------------------------------------------------
  * 2021.02.11	ljpark		신규
  */
+var gMenuId = 'AU_USER';
+
 var clsfList; // 직급코드 배열
 var prjctList; // 프로젝트 배열
 var deptList; // 부서 배열
@@ -49,10 +51,11 @@ $(function() {
 		, rules: { //규칙 - id 값으로 
 			  userId     : {maxlength:50, required:true} 								
 			, userNm     : {maxByteLength:200, required:true} 			    
-			, pwd        : {minlength:4} 			    
+			, pwd        : {minlength:4, required:true} 			    
 			, clsfCd     : {maxlength:5, required:true} 			    
 			, deptCd     : {maxlength:5, required:true} 			    
 			, ecnyYmd    : {dateISO:true} 			    
+			, usergrpCd  : {maxlength:5, required:true} 			    
 		}
 	});
 	

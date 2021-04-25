@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 //========================================
-// @brief 사용자 > 직원정보
+// @brief 사용자정보
 //========================================
 // @history 
 //  	2021.02.09 박이정(마인드원) 최초작성
@@ -20,8 +20,8 @@
 
         <div class="container">
             <div class="title">
-            	<div style="float:left;"><h1>직원정보</h1></div>
-            	<div class="location"><ul><li class="home"></li><li>사용자</li><li>직원정보</li></ul></div>
+            	<div style="float:left;"><h1>사용자정보</h1></div>
+            	<div class="location"><ul><li class="home"></li><li>사용자</li><li>사용자정보</li></ul></div>
             </div>
             <div class="cont_divide">
             	<div class="left">

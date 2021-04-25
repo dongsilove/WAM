@@ -8,7 +8,7 @@
  * -------------------------------------------------
  * 2021.02.11	ljpark		신규
  */
-
+var gMenuId = 'CM_PRJCT';
 $(function() {
 	_datepicker.dateInit();
 	_list.paginationInit();

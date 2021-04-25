@@ -85,6 +85,7 @@ public class LoginApiController {
 		
 		// 일반 로그인 처리
 		String pwd = (String)param.get("pwd");
+		logger.debug(pwd);
 		String userId = (String)param.get("userId");
 		Optional<TAuUser> optUser = userRepository.findById(userId);
 		
@@ -93,7 +94,10 @@ public class LoginApiController {
 			String resultPwd = rsltUser.getPwd();
 			String resultSalt = rsltUser.getPwdSalt(); 
 			String encryptPwd = CryptoUtil.encryptSHA256salt(pwd,resultSalt); // parameter pwd암호화
+			logger.debug("encryptPwd - " + encryptPwd);
+			logger.debug("resultPwd - " + resultPwd);
 			if (resultPwd.equals(encryptPwd)) { // DB의 비밀번호와 암호화비밀번호가 일치하면 
+				
 				
 				session.setAttribute("loginId", userId); // session timeout 점검용
 				session.setAttribute("loginDeptNm", rsltUser.getTAuDept().getDeptNm()); // 부서명

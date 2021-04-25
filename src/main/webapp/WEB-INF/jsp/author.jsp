@@ -4,7 +4,7 @@
 // @brief 권한
 //========================================
 // @history 
-//  	2021.02.09 박이정(마인드원) 최초작성
+//  	2021.04.23 박이정(마인드원) 최초작성
 //========================================
 %>
 <!DOCTYPE html>
@@ -32,38 +32,40 @@
 								<input type="hidden" id="searchtmp" name="" value=""  />
 								
 								<span> 사용자그룹 : 
-									<select name="usergrpNm" id="usergrpNm" onChange="_list.getList(1);" class="usergrpNm">
+									<select name="ugrpCd" id="ugrpCd"  onchange="chgUsergrp(this.value)" class="ugrpCd">
 										   <option value=''> </option>
 									</select>
 								</span>
 								
-								<select name="searchName" id="searchName"   >
-										<!-- <option value=''> -- 검색선택 -- </option> -->
-										<option value="deptNm" >부서명</option>
+								<!-- <select name="searchName" id="searchName"   >
+										<option value=''> -- 검색선택 -- </option>
+										<option value=menuNm" >메뉴명</option>
 								</select>
 								<input type="text" name="searchValue" id="searchValue" value="" 
 									placeholder="검색할 내용을 입력해주세요"  
-									onkeypress="if(event.keyCode==13) { _list.getList(1); return false;}"/>
+									onkeypress="if(event.keyCode==13) { _list.getList(1); return false;}"/> -->
 							</form>
 							</div>
-							<a href="#" onclick="_list.getList(1);">조회</a>
+							<a href="#" onclick="getMenuAuthList();">조회</a>
+							<a href="#" onclick="$('#detailForm').submit();">저장</a>
 						</div> 
 						
 					</div>
 		            <div class="container_inner task_list_wrap">
 		                <div class="task_list">
+		                <form name="detailForm" id="detailForm" onsubmit="return false;">
 				        <table id="list_t">
 				            <colgroup>
+				                <col style="width:15%">
 				                <col style="width:20%">
 				                <col style="width:15%">
-				                <col style="width:10%">
 				                <col style="width:auto">
 				            </colgroup>
 				            <thead>
 				                <tr>
-				                    <th scope="col" rowspan="2">메뉴코드</th>
+				                    <th scope="col" rowspan="2">메뉴아이디</th>
 				                    <th scope="col" rowspan="2">메뉴명</th>
-				                    <th scope="col" rowspan="2">상위메뉴코드</th>
+				                    <th scope="col" rowspan="2">상위메뉴아이디</th>
 				                    <th scope="col" colspan="6">권한설정</th>
 				                </tr>
 				                <tr>
@@ -79,6 +81,7 @@
 								<tr><td colspan=9>조건을 선택하시고 검색 버튼을 누르세요.</td></tr>
 				            </tbody>
 				        </table>
+				        </form>
 		                </div>
 		            </div>            	
 
@@ -86,7 +89,13 @@
 
         </div><!--//container-->
     </div>
+<form id="authForm">
+	<input type="hidden" name="usergrpCd" id="usergrpCd" >
+	<input type="hidden" name="usergrpNm" id="usergrpNm">
+	<input type="hidden" name="authorCn" id="authorCn">
+</form>
 </body>
+
 <script>
 
 </script>

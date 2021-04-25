@@ -4,7 +4,7 @@
 // @brief 메뉴
 //========================================
 // @history 
-//  	2021.02.09 박이정(마인드원) 최초작성
+//  	2021.04.23 박이정(마인드원) 최초작성
 //========================================
 %>
 <!DOCTYPE html>
@@ -52,12 +52,16 @@
 		                        <col style="width:20%">
 		                        <col style="width:auto">
 		                        <col style="width:20%">
+		                        <col style="width:20%">
+		                        <col style="width:20%">
 		                    </colgroup>
 		                    <thead>
 		                        <tr>
 		                            <th scope="col">메뉴아이디</th>
 		                            <th scope="col">메뉴명</th>
 		                            <th scope="col">상위메뉴</th>
+		                            <th scope="col">메뉴아이콘명</th>
+		                            <th scope="col">메뉴URL</th>
 		                        </tr>
 		                    </thead>
 		                    <tbody id="listData">

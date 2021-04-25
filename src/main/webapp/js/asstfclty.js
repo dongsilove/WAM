@@ -8,7 +8,7 @@
  * -------------------------------------------------
  * 2021.03.02	ljpark		신규
  */
-
+var gMenuId = 'AM_SW_ASST_FCLTY';
 $(function() {
 	
 	//공급계통 function(urls, objs ,textNm,valueNm)

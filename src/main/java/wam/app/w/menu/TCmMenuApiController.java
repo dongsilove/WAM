@@ -48,6 +48,18 @@ public class TCmMenuApiController {
 		return list;
 	}
 	
+	@Operation(summary = "계층형 메뉴 목록 조회", description = "계층형으로 메뉴 목록을 조회한다.")
+	@GetMapping("/menus/listConnectBy")
+	public Page<TCmMenu> listConnectBy( @RequestParam Map<String,Object> param,
+			@RequestParam(name = "perPage", required = true, defaultValue = "200") int perPage,
+			@RequestParam(name = "page", required = true, defaultValue = "1") int page) throws Exception {
+		Page<TCmMenu> list;
+		param.forEach((k,v)->logger.debug("key:" + k + "\tvalue:" +v));
+		//PageRequest pageRequest = PageRequest.of(page - 1, perPage, Sort.by(Direction.ASC, "menuId"));
+		list = (Page<TCmMenu>) menuRepository.listConnectBy(PageRequest.of(page - 1, perPage));
+		return list;
+	}
+	
 	@Operation(summary = "메뉴 조회", description = "단건 조회한다.")
 	@GetMapping("/menus/{menuId}")
 	public Optional<TCmMenu> get( @PathVariable String menuId ) throws Exception {
