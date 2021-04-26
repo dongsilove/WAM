@@ -12,7 +12,7 @@ public interface TCmMenuRepository extends JpaRepository<TCmMenu, String> {
 	
 	Page<TCmMenu> findByMenuNmContaining(String searchValue, Pageable pageable);
 	
-	@Query(value=" with recursive MENU_V (MENU_ID, MENU_NM, UPPER_MENU_ID, MENU_ICON_NM, MENU_URL, dep, pth, cyc)"
+	@Query(value=" with recursive MENU_V (MENU_ID, MENU_NM, UPPER_MENU_ID, MENU_ICON_NM, MENU_URL, MENU_DP, pth, cyc)"
 			+ " as ("
 			+ " 	SELECT M.MENU_ID, M.MENU_NM, M.UPPER_MENU_ID,M.MENU_ICON_NM, M.MENU_URL,  1, "
 			+ " 		array[m.menu_ID::::text]  AS pth, false"
@@ -20,7 +20,7 @@ public interface TCmMenuRepository extends JpaRepository<TCmMenu, String> {
 			+ " 	WHERE m.use_yn = 'Y' "
 			+ " 	  and m.MENU_ID = 'TOP'"
 			+ " 	union all "
-			+ " 	select M.MENU_ID, M.MENU_NM, M.UPPER_MENU_ID,M.MENU_ICON_NM, M.MENU_URL, v.dep + 1,"
+			+ " 	select M.MENU_ID, M.MENU_NM, M.UPPER_MENU_ID,M.MENU_ICON_NM, M.MENU_URL, v.MENU_DP + 1,"
 			+ " 	   array_append( v.pth, m.menu_id::::text) AS pth , m.menu_id = any(v.pth)"
 			+ " 	from t_cm_menu m, menu_v v"
 			+ " 	where m.upper_menu_id = v.MENU_ID"

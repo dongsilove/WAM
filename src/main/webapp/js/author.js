@@ -112,9 +112,9 @@ $(function() {
 	        $("#authorCn").val(JSON.stringify(obj));
 			_ajaxUtils.ajax({"url" : "/api/usergrps/", "method": "PUT", "form" : $("#authForm")
 				,"successCallback": function(result) {
-					detailForm.reset();
 					_usrgrp.list();
 					_list.getList();
+					detailForm.reset();
 				}
 			});
 		}

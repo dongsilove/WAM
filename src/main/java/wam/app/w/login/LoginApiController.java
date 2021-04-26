@@ -12,6 +12,8 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +21,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mindone.okch.common.dto.ResponseMessage;
+
+import wam.app.w.menu.TCmMenu;
+import wam.app.w.menu.TCmMenuRepository;
 import wam.app.w.user.TAuUser;
 import wam.app.w.user.TAuUserRepository;
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,10 +41,12 @@ public class LoginApiController {
 	
 	@Autowired
 	TAuUserRepository userRepository;
+	@Autowired
+	TCmMenuRepository menuRepository;
 	
 	@Operation(summary = "로그인", description = "로그인 정보를 session에 저장한다.")
 	@PostMapping("/login")
-	public String actionLoginNew(@RequestParam Map<String, Object> param,
+	public  String actionLoginNew(@RequestParam Map<String, Object> param,
 			HttpServletRequest request,
 			HttpServletResponse response,
 			HttpSession session) throws Exception {
@@ -52,7 +60,7 @@ public class LoginApiController {
 		// session에 저장된 TAuUser 가져오기
 		TAuUser loginInfo = wam.app.util.SessionUtil.getLoginInfo(request);
 		if(loginInfo != null && loginInfo.getUserId().equals(param.get("userId").toString())){ // 이미 로그인되어 있다면
-			return "200"; // already loginned
+			return "200|" + loginInfo.getTAuUserGrp().getAuthorCn(); // already loginned
 		}
 
 		// 로그인횟수 점검 5회이상일 경우 5분후 재시도 권장
@@ -98,15 +106,16 @@ public class LoginApiController {
 			logger.debug("resultPwd - " + resultPwd);
 			if (resultPwd.equals(encryptPwd)) { // DB의 비밀번호와 암호화비밀번호가 일치하면 
 				
-				
+				// 메뉴조회
+				Page<TCmMenu> list = (Page<TCmMenu>) menuRepository.findAll(PageRequest.of(1 - 1, 200));
+				session.setAttribute("menuList", list); 
+
 				session.setAttribute("loginId", userId); // session timeout 점검용
 				session.setAttribute("loginDeptNm", rsltUser.getTAuDept().getDeptNm()); // 부서명
 				
 				session.setAttribute("loginInfo", rsltUser);
 				
-
-				//session.setMaxInactiveInterval(10); // SESSION TEST 위해 SESSION유지기간 30초로 설정
-				return "200";
+				return "200|" + rsltUser.getTAuUserGrp().getAuthorCn();
 			} else { // 비밀번호 일치하지 않음.
 				return "201|pwd is not equal";
 			}

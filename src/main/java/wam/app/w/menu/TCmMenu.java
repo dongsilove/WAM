@@ -41,8 +41,9 @@ public class TCmMenu implements Serializable {
 	@Schema(description ="메뉴URL" )
 	private String menuUrl;
 	
-	@Schema(description = "dep")
-	private Integer dep;
+	@Column(name="menu_dp")
+	@Schema(description = "메뉴깊이")
+	private Integer menuDp;
 	
 	@Transient
 	@Schema(description = "path")

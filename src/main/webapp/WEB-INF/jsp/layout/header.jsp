@@ -34,9 +34,9 @@
 <script>
 	var loginId = '${loginInfo.userId}';
 	var loginDeptNm = '${loginDeptNm}';
-	//var loginDeptNm = '${loginInfo.TAuDept.deptNm}';
-	//var loginPrjctSn = '${loginInfo.TCmPrjct.prjctSn}';
-	//console.log("deptNm : " + deptNm);
-	console.log('${loginInfo}');
+
+	//console.log('${loginInfo}');
+	var authorCn = JSON.parse('${loginInfo.TAuUserGrp.authorCn}');
+	//console.log(authorCn);
 </script>
 </head>
