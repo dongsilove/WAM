@@ -37,5 +37,22 @@ public class TAmAsstFcltyController {
 		}
 		return "asstfclty_edit";
 	}
-	
+
+	@GetMapping("/asstcw/list")
+	public String asstcw_list(@RequestParam Map<String,Object> params, ModelMap model) throws Exception {
+		params.forEach((k,v)->model.addAttribute(k, v));
+		return "asstcw_list";
+	}
+
+	@GetMapping("/asstcw/edit")
+	public String asstcw_edit(@RequestParam Map<String,Object> params, ModelMap model) throws Exception {
+		
+		if (params.get("asstSn") != null && !params.get("asstSn").toString().equals("")) {
+			model.addAttribute("asstSn", params.get("asstSn").toString());
+		}
+		if (params.get("params") != null && !params.get("params").toString().equals("")) {
+			model.addAttribute("params", params.get("params").toString());
+		}
+		return "asstcw_edit";
+	}
 }

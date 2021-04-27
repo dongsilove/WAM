@@ -1,4 +1,4 @@
-package wam.app.w.asstFclty;
+package wam.app.w.asstCw;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -25,14 +25,14 @@ import wam.app.common.CommonTbl;
  */
 @Entity
 @Data
-@Table(name="t_am_asst_fclty")
-@NamedQuery(name="TAmAsstFclty.findAll", query="SELECT t FROM TAmAsstFclty t")
-public class TAmAsstFclty extends CommonTbl implements Serializable {
+@Table(name="t_am_asst_cw")
+@NamedQuery(name="TAmAsstCw.findAll", query="SELECT t FROM TAmAsstCw t")
+public class TAmAsstCw extends CommonTbl implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="T_AM_ASST_FCLTY_ASSTSN_GENERATOR", sequenceName="T_AM_ASST_FCLTY_ASST_SN_SEQ", allocationSize=1)
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="T_AM_ASST_FCLTY_ASSTSN_GENERATOR")
+	@SequenceGenerator(name="T_AM_ASST_CW_ASSTSN_GENERATOR", sequenceName="T_AM_ASST_CW_ASST_SN_SEQ", allocationSize=1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="T_AM_ASST_CW_ASSTSN_GENERATOR")
 	@Column(name="asst_sn")
 	@Schema(description ="자산일련번호" )
 	private Integer asstSn;
@@ -169,7 +169,7 @@ public class TAmAsstFclty extends CommonTbl implements Serializable {
 	@Schema(description="동력량")
 	private BigDecimal powerQy;
 	
-	public TAmAsstFclty() {
+	public TAmAsstCw() {
 		super();
 	}
 
