@@ -56,4 +56,14 @@ public class TCmMenu implements Serializable {
 	public TCmMenu() {
 	}
 
+	@Override
+	public String toString() {
+		return "{menuId:\"" + menuId + "\", menuNm:\"" + menuNm + "\", upperMenuId:\"" + upperMenuId 
+				+ "\", menuIconNm:\""
+				+ menuIconNm + "\", menuUrl:\"" + menuUrl + "\", menuDp:\"" + menuDp + "\"}";
+	}
+
+
+
+	
 }

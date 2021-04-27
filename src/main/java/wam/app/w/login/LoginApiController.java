@@ -2,7 +2,7 @@ package wam.app.w.login;
 
 
 import java.io.PrintWriter;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -22,8 +22,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import net.minidev.json.JSONArray;
+import net.minidev.json.JSONObject;
 import wam.app.util.CryptoUtil;
 import wam.app.util.JsonUtil;
 import wam.app.w.menu.TCmMenu;
@@ -106,7 +111,7 @@ public class LoginApiController {
 			logger.debug("resultPwd - " + resultPwd);
 			if (resultPwd.equals(encryptPwd)) { // DB의 비밀번호와 암호화비밀번호가 일치하면 
 				
-				// 메뉴조회
+				// 메뉴, 권한(사용자그룹)조회 => 권한있는 첫페이지 구하기
 				Page<TCmMenu> menuList = (Page<TCmMenu>) menuRepository.listConnectBy(PageRequest.of(1 - 1, 200));
 				Map<String, Object> authorCnMap = JsonUtil.convertJsonToObject(rsltUser.getTAuUserGrp().getAuthorCn());
 				String firstMenuUrl = "";
@@ -118,8 +123,8 @@ public class LoginApiController {
 						}
 					}
 				}
-				session.setAttribute("menuList", menuList); 
-				session.setAttribute("firstMenuUrl", firstMenuUrl); 
+				
+				session.setAttribute("firstMenuUrl", firstMenuUrl);  // 권한있는 첫 페이지
 
 				session.setAttribute("loginId", userId); // session timeout 점검용
 				session.setAttribute("loginDeptNm", rsltUser.getTAuDept().getDeptNm()); // 부서명
@@ -133,10 +138,9 @@ public class LoginApiController {
 		} else { // 입력한 userId에 해당하는 사용자record 없음.
 			return "201|TAuUser does not exist";
 		}
-			
-		
-		
 	}
+	
+
 	
 	@Operation(summary = "session만료", description = "session만료")
     @RequestMapping(value="/nosession")

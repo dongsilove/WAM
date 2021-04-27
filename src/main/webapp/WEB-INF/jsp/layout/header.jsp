@@ -34,9 +34,6 @@
 <script>
 	var loginId = '${loginInfo.userId}';
 	var loginDeptNm = '${loginDeptNm}';
-
-	//console.log('${loginInfo}');
 	var authorCn = JSON.parse('${loginInfo.TAuUserGrp.authorCn}');
-	//console.log(authorCn);
 </script>
 </head>
