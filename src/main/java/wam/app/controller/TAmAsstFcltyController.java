@@ -20,13 +20,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class TAmAsstFcltyController {
 
-	@GetMapping("/asstfclty/list")
+	@GetMapping("/asstfcltys/list")
 	public String asst_list(@RequestParam Map<String,Object> params, ModelMap model) throws Exception {
 		params.forEach((k,v)->model.addAttribute(k, v));
 		return "asstfclty_list";
 	}
 
-	@GetMapping("/asstfclty/edit")
+	@GetMapping("/asstfcltys/edit")
 	public String asst_edit(@RequestParam Map<String,Object> params, ModelMap model) throws Exception {
 		
 		if (params.get("asstSn") != null && !params.get("asstSn").toString().equals("")) {
@@ -38,13 +38,13 @@ public class TAmAsstFcltyController {
 		return "asstfclty_edit";
 	}
 
-	@GetMapping("/asstcw/list")
+	@GetMapping("/asstcws/list")
 	public String asstcw_list(@RequestParam Map<String,Object> params, ModelMap model) throws Exception {
 		params.forEach((k,v)->model.addAttribute(k, v));
 		return "asstcw_list";
 	}
 
-	@GetMapping("/asstcw/edit")
+	@GetMapping("/asstcws/edit")
 	public String asstcw_edit(@RequestParam Map<String,Object> params, ModelMap model) throws Exception {
 		
 		if (params.get("asstSn") != null && !params.get("asstSn").toString().equals("")) {

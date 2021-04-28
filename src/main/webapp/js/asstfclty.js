@@ -11,6 +11,8 @@
 var gMenuId = 'AM_SW_ASST_FCLTY';
 $(function() {
 	
+	//공급계통소재지명 function(urls, objs ,textNm,valueNm)
+	_commUtils.getSelectBox('/api/common/codes/SWLOC',$(".splsysLocplcNm"),"cdNm","cdNm"); 
 	//공급계통 function(urls, objs ,textNm,valueNm)
 	_commUtils.getSelectBox('/api/common/codes/SPSYS',$(".splsysNm"),"cdNm","cdNm"); 
 	//공정

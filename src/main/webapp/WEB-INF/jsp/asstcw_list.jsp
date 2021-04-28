@@ -20,10 +20,9 @@ var worktypeNm = '${worktypeNm}';	// 공종
 var searchName = '${searchName}';
 var searchValue = '${searchValue}';
 
-var gMenuId = 'AM_SW_ASST_FCLTY';
-var asstUrl = 'asstfcltys';
-var splsysLocplcCdGrp = 'SWLOC';
-
+var gMenuId = 'AM_SW_ASST_CW';
+var asstUrl = 'asstcws';
+var splsysLocplcCdGrp = 'CWLOC';
 </script>
 <script src="/js/asstcmmn.js"></script>
 

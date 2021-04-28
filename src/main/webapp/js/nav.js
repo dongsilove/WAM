@@ -16,13 +16,14 @@ $(function() {
 });
 
 var _nav = {
-	getList : function() {
+	menuList : []
+	, getList : function() {
 		
 		_ajaxUtils.ajax({"url" : "/api/menus/listConnectBy"
 			,"successCallback": function(data) { //console.log(data);
 				
 				_nav.makeNav(data.content);
-				
+				_nav.makeTitle(gMenuId);
 			}
 		});
 		
@@ -41,6 +42,7 @@ var _nav = {
 			classOn = "";
 			if (isEmpty(authorCn[f.menuId])) continue; // 권한이 없으면 다음메뉴로
 			
+			_nav.menuList.push(f);
 			if (f.menuUrl) {
 				authorMenuObj[f.menuId] = f.menuUrl; // url 있고 권한이 있는 메뉴 목록
 			} 
@@ -69,6 +71,27 @@ var _nav = {
 			//location.href = firstMenuUrl; // 권한이 있는 첫메뉴로 이동
 		}
 
+	}
+	
+	, makeTitle : function(menuId) {
+		var str = '';
+		console.log("makeTitle : gMenuId : " + menuId);
+		console.log(_nav.menuList);
+		for( var f of _nav.menuList ) {
+			if (f.menuId == menuId) {
+				console.log(f);
+				$("#pageTitle").text(f.menuNm);
+				$("#titleLv2").text(f.menuNm);
+				$("#titleLv1").text(_nav.getMenuNm(f.upperMenuId));
+			}
+		}
+	}
+	
+	, getMenuNm : function(menuId) {
+		for( var f of _nav.menuList ) {
+			if (f.menuId == menuId)
+				return f.menuNm;
+		}
 	}
 
 } // _list

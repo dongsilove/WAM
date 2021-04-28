@@ -15,9 +15,9 @@
 var asstSn = '${asstSn}';
 var mode = 'edit';
 
-var gMenuId = 'AM_SW_ASST_FCLTY';
-var asstUrl = 'asstfcltys';
-var splsysLocplcCdGrp = 'SWLOC';
+var gMenuId = 'AM_SW_ASST_CW';
+var asstUrl = 'asstcws';
+var splsysLocplcCdGrp = 'CWLOC';
 </script>
 <script src="/js/asstcmmn.js"></script>
  
@@ -48,7 +48,7 @@ var splsysLocplcCdGrp = 'SWLOC';
                    <div class="ul_table">
                        <ul>
                            <li><label for="asstSn">자산일련번호</label></li>
-                           <li><input type="text" name="asstSn" id="asstSn" value="" readonly >
+                           <li><input type="text" name="asstSn" id="asstSn" value="" >
                            	<label><input type="checkbox" name="asstCnfirmYn" value="Y">자산확인</label></li>
                        </ul>
                        <ul>

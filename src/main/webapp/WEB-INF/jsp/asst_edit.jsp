@@ -25,8 +25,8 @@ var mode = 'edit';
 
         <div class="container">
             <div class="title">
-            	<div style="float:left;"><h1>수원회계자산대장</h1></div>
-            	<div class="location"><ul><li class="home"></li><li>인벤토리</li><li>수원회계자산대장</li></ul></div>
+            	<div style="float:left;"><h1 id="pageTitle">수원회계자산대장</h1></div>
+            	<div class="location"><ul><li class="home"></li><li id="titleLv1">인벤토리</li><li id="titleLv2">수원회계자산대장</li></ul></div>
             </div>
                 <div class="writer task_list_wrap">
 	                <div class="write_inner">
@@ -89,7 +89,7 @@ var mode = 'edit';
                         </ul>
                         <ul>
                             <li><label for="useYn">사용여부(불용여부)</label></li>
-                            <li><input type="text" name="useYn" id="useYn"  value="" ></li>
+                            <li><input type="text" name="useYn" id="useYn"  value="Y" ></li>
                         </ul>
                         <ul>
                             <li class="required"><label for="frstAcqsYmd">최초취득일</label></li>

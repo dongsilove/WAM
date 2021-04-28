@@ -20,8 +20,8 @@
 
         <div class="container">
             <div class="title">
-            	<div style="float:left;"><h1>부서</h1></div>
-            	<div class="location"><ul><li class="home"></li><li>사용자</li><li>부서정보</li></ul></div>
+             	<div style="float:left;"><h1 id="pageTitle">부서</h1></div>
+            	<div class="location"><ul><li class="home"></li><li id="titleLv1">사용자</li><li id="titleLv2">부서정보</li></ul></div>
             </div>
             <div class="cont_divide">
             	<div class="left">

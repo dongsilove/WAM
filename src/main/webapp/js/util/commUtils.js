@@ -177,7 +177,7 @@ var _commUtils = {
 			url : urls+"?perPage=200",
 			type : "GET",
 			datatype : "JSON",
-			success : function(data) { console.log(data);
+			success : function(data) { //console.log(data);
 				if (!data || !data.content) return;
 				var list = data.content;
 				$.each(objs, function(index, item){

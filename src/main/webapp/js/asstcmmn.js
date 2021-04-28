@@ -1,17 +1,18 @@
 /**
- * @FileName 	asstcw.js
+ * @FileName 	asstcmmn.js
  * @author 		ljpark
  * @Date 		2021.04.27
- * @Description 자산
+ * @Description 시설공통 js
  * @History
  * DATE			AUTHOR		NOTE	
  * -------------------------------------------------
- * 2021.03.02	ljpark		신규
+ * 2021.04.28	ljpark		신규
  */
-var gMenuId = 'AM_SW_ASST_CW';
-var asstUrl = 'asstcws';
+
 $(function() {
 	
+	//공급계통소재지명 function(urls, objs ,textNm,valueNm)
+	_commUtils.getSelectBox('/api/common/codes/' + splsysLocplcCdGrp,$(".splsysLocplcNm"),"cdNm","cdNm"); 
 	//공급계통 function(urls, objs ,textNm,valueNm)
 	_commUtils.getSelectBox('/api/common/codes/SPSYS',$(".splsysNm"),"cdNm","cdNm"); 
 	//공정
