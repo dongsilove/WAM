@@ -75,8 +75,8 @@ var _nav = {
 	
 	, makeTitle : function(menuId) {
 		var str = '';
-		console.log("makeTitle : gMenuId : " + menuId);
-		console.log(_nav.menuList);
+		//console.log("makeTitle : gMenuId : " + menuId);
+		//console.log(_nav.menuList);
 		for( var f of _nav.menuList ) {
 			if (f.menuId == menuId) {
 				console.log(f);

@@ -83,7 +83,7 @@ public class TAmAsstCwApiController {
 			log.debug("저장시 오류발생");
 		} else {
 			// 파일저장 : vo로 입력받는 것이 아니라, request에서 값을 받아 저장
-			String tableNm = "T_AM_ASST_FCLTY";
+			String tableNm = "T_AM_ASST_CW";
 			String tableId = asst.getAsstSn().toString();
 			String path = tableNm;
 			log.debug("tableId : " + tableId);

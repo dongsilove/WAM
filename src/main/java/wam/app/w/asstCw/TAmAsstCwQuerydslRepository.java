@@ -52,7 +52,7 @@ public class TAmAsstCwQuerydslRepository extends QuerydslRepositorySupport {
 		if(param.get("psitnNm") != null && !param.get("psitnNm").toString().equals("")) { 
 			booleanBuilder.and( tAmAsstCw.psitnNm.contains(param.get("psitnNm").toString()) );
 		}
-		// 최초취득가
+		// 최초취득일
 		if(param.get("frstAcqsYmd") != null && !param.get("frstAcqsYmd").toString().equals("")) { 
 			booleanBuilder.and( tAmAsstCw.frstAcqsYmd.contains(param.get("frstAcqsYmd").toString()) );
 		}
@@ -60,19 +60,40 @@ public class TAmAsstCwQuerydslRepository extends QuerydslRepositorySupport {
 		if(param.get("revalYmd") != null && !param.get("revalYmd").toString().equals("")) { 
 			booleanBuilder.and( tAmAsstCw.revalYmd.contains(param.get("revalYmd").toString()) );
 		}
+		// 형식
+		if(param.get("fomNm") != null && !param.get("fomNm").toString().equals("")) { 
+			booleanBuilder.and( tAmAsstCw.fomNm.contains(param.get("fomNm").toString()) );
+		}
+		// 규격
+		if(param.get("stndrdNm") != null && !param.get("stndrdNm").toString().equals("")) { 
+			booleanBuilder.and( tAmAsstCw.stndrdNm.contains(param.get("stndrdNm").toString()) );
+		}
+		// 동력
+		if(param.get("powerQy") != null && !param.get("powerQy").toString().equals("")) { 
+			BigDecimal powerQy = new BigDecimal(param.get("powerQy").toString());
+			booleanBuilder.and( tAmAsstCw.powerQy.eq(powerQy) );
+		}
+		// 설치일
+		if(param.get("installYmd") != null && !param.get("installYmd").toString().equals("")) { 
+			booleanBuilder.and( tAmAsstCw.installYmd.contains(param.get("installYmd").toString()) );
+		}
+		// 제조사
+		if(param.get("makrNm") != null && !param.get("makrNm").toString().equals("")) { 
+			booleanBuilder.and( tAmAsstCw.makrNm.contains(param.get("makrNm").toString()) );
+		}
 		// 공정명
 		if(param.get("prcNm") != null && !param.get("prcNm").toString().equals("")) { 
 			booleanBuilder.and( tAmAsstCw.prcNm.contains(param.get("prcNm").toString()) );
 		}
-		//공종명
+		// 공종명
 		if(param.get("worktypeNm") != null && !param.get("worktypeNm").toString().equals("")) { 
 			booleanBuilder.and( tAmAsstCw.worktypeNm.contains(param.get("worktypeNm").toString()) );
 		}
-		// 계통명
+		// 공급계통명
 		if(param.get("splsysNm") != null && !param.get("splsysNm").toString().equals("")) { 
 			booleanBuilder.and( tAmAsstCw.splsysNm.contains(param.get("splsysNm").toString()) );
 		}
-		// 계통소재지명
+		// 공급계통소재지명
 		if(param.get("splsysLocplcNm") != null && !param.get("splsysLocplcNm").toString().equals("")) { 
 			booleanBuilder.and( tAmAsstCw.splsysLocplcNm.contains(param.get("splsysLocplcNm").toString()) );
 		}

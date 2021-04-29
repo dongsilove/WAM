@@ -10,6 +10,7 @@
  */
 
 $(function() {
+	$("#btnEdit").attr("href", "/" + asstUrl + "/edit"); // 등록 버튼 url
 	
 	//공급계통소재지명 function(urls, objs ,textNm,valueNm)
 	_commUtils.getSelectBox('/api/common/codes/' + splsysLocplcCdGrp,$(".splsysLocplcNm"),"cdNm","cdNm"); 
@@ -28,7 +29,7 @@ $(function() {
 			else $("#searchName").val(searchName);
 			$("#searchValue").val(searchValue);
 			_list.paginationInit();
-			_list.getList(1);
+			_list.getList(gPage); // gPage : list.jsp에 선언
 		} else if (mode == 'edit') {
 			_list.getDetail(asstSn);
 		}
@@ -106,7 +107,7 @@ var _list = {
 					);
 				});
 				if (data.numberOfElements == 0) {
-					$("#listData").append("<tr><td colspan=9>조회결과가 없습니다.</td></tr>");
+					$("#listData").append("<tr><td colspan=13>조회결과가 없습니다.</td></tr>");
 				}
 				_list.pagination.setTotalItems(data.totalElements); // 총레코드 수
 				_list.pagination._paginate(page); // 조회 page
