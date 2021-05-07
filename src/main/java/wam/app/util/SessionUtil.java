@@ -101,7 +101,7 @@ public class SessionUtil {
 	}
 
 	/**
-	 * 
+	 * ServletContext 관련 함수들
 	 * @param request
 	 * @param context
 	 * @return ServletContext
@@ -114,11 +114,6 @@ public class SessionUtil {
 		return servletContext;
 	}
 
-	/**
-	 * 
-	 * @param request
-	 * @return ServletContext
-	 */
 	public static ServletContext getServletContext() {
 		return getServletContext("/");
 	}

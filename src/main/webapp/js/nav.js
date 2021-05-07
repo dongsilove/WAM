@@ -9,19 +9,28 @@
  * 2021.04.25	ljpark		신규
  */
 var authorMenuObj = {}; // url 있고 권한이 있는 메뉴 목록
+
 $(function() {
-	
-	_nav.getList();
+	if (storageAvailable('sessionStorage') && sessionStorage.getItem("menuList")) {
+		_nav.makeNav(JSON.parse(sessionStorage.getItem("menuList")));	
+		console.log(sessionStorage.getItem("menuList"));
+		_nav.makeTitle(gMenuId);
+	} else {
+		_nav.getList();
+	}
 
 });
 
 var _nav = {
-	menuList : []
+	
+	menuAuthList : []
 	, getList : function() {
 		
 		_ajaxUtils.ajax({"url" : "/api/menus/listConnectBy"
 			,"successCallback": function(data) { //console.log(data);
-				
+			    if (storageAvailable('sessionStorage')) {
+					sessionStorage.setItem("menuList", JSON.stringify(data.content));
+				}
 				_nav.makeNav(data.content);
 				_nav.makeTitle(gMenuId);
 			}
@@ -38,11 +47,11 @@ var _nav = {
 		//data.content.forEach(function(f){ // continue를 사용하기 위해 주석처리
 		for( var f of mList ) { // continue를 사용하기 위해 for( of array)를 사용한다.
 			//console.log(f.menuId);
-			processNull(f);
+			//processNull(f);
 			classOn = "";
 			if (isEmpty(authorCn[f.menuId])) continue; // 권한이 없으면 다음메뉴로
 			
-			_nav.menuList.push(f);
+			_nav.menuAuthList.push(f);
 			if (f.menuUrl) {
 				authorMenuObj[f.menuId] = f.menuUrl; // url 있고 권한이 있는 메뉴 목록
 			} 
@@ -76,8 +85,8 @@ var _nav = {
 	, makeTitle : function(menuId) {
 		var str = '';
 		//console.log("makeTitle : gMenuId : " + menuId);
-		//console.log(_nav.menuList);
-		for( var f of _nav.menuList ) {
+		//console.log(_nav.menuAuthList);
+		for( var f of _nav.menuAuthList ) {
 			if (f.menuId == menuId) {
 				console.log(f);
 				$("#pageTitle").text(f.menuNm);
@@ -88,7 +97,7 @@ var _nav = {
 	}
 	
 	, getMenuNm : function(menuId) {
-		for( var f of _nav.menuList ) {
+		for( var f of _nav.menuAuthList ) {
 			if (f.menuId == menuId)
 				return f.menuNm;
 		}

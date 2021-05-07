@@ -25,6 +25,7 @@
 	<!-- <script src="/js/lib/jquery/jquery-fileDownload.js"></script> --><!-- 첨부파일 다운로드 : $.fileDownload() -->
 
     <script src="/js/util/validations.js"></script>
+    <script src="/js/util/localStorage.js"></script>
     <script src="/js/util/paging.js"></script>
     <script src="/js/util/commUtils.js"></script>
     <script src="/js/util/ajaxUtils.js"></script>

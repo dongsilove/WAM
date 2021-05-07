@@ -26,6 +26,7 @@ $(function() {
 					var result = data.split('|');
 					if(result[0] == '200') {
 						console.log(result[1]);
+						sessionStorage.clear(); // 매번 메뉴 조회하지 않기 위해 localStorage 사용
 						location.href = result[1];
 					} else {
 						alert("로그인아이디가 없거나 로그인 정보가 일치 하지 않습니다.");
