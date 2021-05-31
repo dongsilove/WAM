@@ -60,7 +60,7 @@ var _list = {
 				$("#listData").html(""); // 목록 초기화
 				data.content.forEach(function(f){
 					processNull(f);
-					$("#listData").append("<tr onclick=\"_list.getDetail('"+ f.grpCd + "," + f.cd +"')\">"
+					$("#listData").append("<tr onclick=\"_list.getDetail('"+ f.grpCd + "','" + f.cd +"')\">"
 						+"<td>" +f.grpCd+"</td><td>"+cdGrpList[f.grpCd]+"</td><td>"+ f.cd+"</td><td>"+f.cdNm
 						+"</td></tr>"
 					);
